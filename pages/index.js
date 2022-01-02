@@ -1,10 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useDispatch } from 'react-redux'
 
 export default function Home() {
-  const dispatch = useDispatch()
   return (
     <div className={styles.container}>
       <Head>
@@ -17,13 +15,6 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-        <div>
-          <button
-            onClick={() => dispatch({ type: "GET_PRODUCTS", payload: [{ id: 1, name: "Eggs", quantity: 12 }] })}
-          >
-            Dispatch
-          </button>
-        </div>
 
         <p className={styles.description}>
           Get started by editing{' '}
