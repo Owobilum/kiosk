@@ -193,7 +193,7 @@ export default function Header() {
                             >
                                 <Box>
                                     <Image
-                                        src="/kiosklogo.png"
+                                        src="/kiosk.png"
                                         alt="kiosk logo"
                                         height={30}
                                         width={30}
