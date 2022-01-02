@@ -137,9 +137,9 @@ export default function Header() {
 
     return (
         <Box
-            style={{ maxWidth: '100%' }}
+            // style={{ maxWidth: '100%'}}
             sx={{
-                mb: { xs: 11, md: 7 }
+                mb: { xs: 11, md: 7 } //bottom margin for header
             }}
         >
             <AppBar
@@ -147,7 +147,7 @@ export default function Header() {
                 position="fixed"
                 style={{
                     backgroundColor: '#ffffff',
-                    // maxWidth: '100%' 
+                    // maxWidth: '100%'
                 }}
                 sx={{
                     px: { xs: 1, md: 7 },
