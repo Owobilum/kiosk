@@ -15,20 +15,21 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Grid, Button, FormControl, OutlinedInput, InputAdornment } from '@mui/material'
 import Image from 'next/image';
-// import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
 import NavDrawer from './NavDrawer';
 
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         position: 'fixed',
-//         bottom: theme.spacing(2),
-//         right: theme.spacing(2),
-//     },
-// }));
+const useStyles = makeStyles((theme) => ({
+    appbar: {
+        backgroundColor: '#ffffff'
+    },
+    btn: {
+        color: "#fff"
+    }
+}));
 
 export default function Header() {
-    // const classes = useStyles()
+    const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -137,18 +138,14 @@ export default function Header() {
 
     return (
         <Box
-            // style={{ maxWidth: '100%'}}
             sx={{
-                mb: { xs: 11, md: 7 } //bottom margin for header
+                mb: { xs: 20, md: 16 } //bottom margin for header
             }}
         >
             <AppBar
                 // position="static"
                 position="fixed"
-                style={{
-                    backgroundColor: '#ffffff',
-                    // maxWidth: '100%'
-                }}
+                className={classes.appbar}
                 sx={{
                     px: { xs: 1, md: 7 },
                     py: { xs: 1, md: 2 }
@@ -232,7 +229,7 @@ export default function Header() {
                                 <Grid item xs={3}>
                                     <Button
                                         variant="contained"
-                                        style={{ color: '#fff' }}
+                                        className={classes.btn}
                                     >
                                         Search
                                     </Button>
@@ -325,7 +322,7 @@ export default function Header() {
                         <Grid item xs={3}>
                             <Button
                                 variant="contained"
-                                style={{ color: '#fff' }}
+                                className={classes.btn}
                             >
                                 Search
                             </Button>
