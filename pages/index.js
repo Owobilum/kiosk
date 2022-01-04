@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import ImageCarousel from "../components/ImageCarousel"
 import CategoryList from "../components/CategoryList";
 import ProductCard from "../components/ProductCard"
+import CategoryCard from "../components/CategoryCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +66,15 @@ const Home = () => {
           <ProductCard />
         </Grid>
 
+      </Grid>
+
+      {/* CATEGORIES ROW */}
+      <Grid
+        container
+      >
+        <Grid item xs={6}>
+          <CategoryCard />
+        </Grid>
       </Grid>
     </div>
   )
