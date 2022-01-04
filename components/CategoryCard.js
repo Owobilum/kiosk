@@ -4,12 +4,10 @@ import { makeStyles } from "@mui/styles"
 const useStyles = makeStyles({
     root: {
         overflow: 'hidden',
-        marginTop: 32,
     },
     container: {
         height: 300,
         backgroundColor: 'grey',
-        backgroundImage: "url('/model.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -22,10 +20,6 @@ const useStyles = makeStyles({
         cursor: "pointer"
     },
     child: {
-        // transition: 'width 0.5s',
-        // '&:hover': {
-        //     width: '50%'
-        // },
         opacity: 0.8,
         height: "33%",
         width: "33%",
@@ -37,17 +31,17 @@ const useStyles = makeStyles({
     }
 })
 
-const CategoryCard = () => {
+const CategoryCard = ({ img, name }) => {
     const classes = useStyles()
     return (
         <div className={classes.root}>
-            <Box className={classes.container}>
+            <Box className={classes.container} style={{ backgroundImage: img }}>
                 <Box className={classes.child}>
                     <Typography
                         variant="h6"
                         component="h6"
                     >
-                        Electronics
+                        {name}
                     </Typography>
                     <Typography
                         variant="body2"
@@ -57,7 +51,6 @@ const CategoryCard = () => {
                     </Typography>
 
                 </Box>
-
             </Box>
         </div>
     )

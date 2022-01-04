@@ -1,10 +1,12 @@
-import { Grid, Typography } from "@mui/material"
+import React from 'react'
+import { Grid, Typography, Paper } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 
 import ImageCarousel from "../components/ImageCarousel"
 import CategoryList from "../components/CategoryList";
 import ProductCard from "../components/ProductCard"
 import CategoryCard from "../components/CategoryCard";
+import categories from '../utils/categories';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
+export default function Home({ topDeals, bestsellers }) {
   const classes = useStyles()
+
   return (
     <div
       className={classes.root}
@@ -58,26 +61,110 @@ const Home = () => {
       </Grid>
 
       {/* TOP DEALS ROW */}
-      <Grid
-        container
-        style={{ marginTop: 32 }}
+      <Paper
+        sx={{
+          py: 5,
+          px: 2,
+          mt: 6
+        }}
       >
-        <Grid item xs={12}>
-          <ProductCard />
+        <Typography
+          variant="h6"
+          component="h3"
+          sx={{ mb: 2 }}
+        >
+          TOP DEALS
+        </Typography>
+        <Grid
+          container
+          spacing={1}
+        // alignItems="stretch"
+        >
+          {topDeals.map(deal => (
+            <Grid key={deal.title} item xs={12} md={3}>
+              <ProductCard
+                img={deal.image}
+                title={deal.title}
+                price={deal.price}
+                ratings={deal.rating.rate}
+                productId={deal.id}
+              />
+            </Grid>
+          ))}
         </Grid>
-
-      </Grid>
+      </Paper>
 
       {/* CATEGORIES ROW */}
       <Grid
         container
+        spacing={3}
+        sx={{ mt: 6 }}
       >
-        <Grid item xs={6}>
-          <CategoryCard />
-        </Grid>
+        {
+          categories.map(category => (
+            <Grid
+              key={category.name}
+              item
+              xs={12}
+              md={6}
+            >
+              <CategoryCard
+                img={category.img}
+                name={category.name}
+              />
+            </Grid>
+          ))
+
+        }
       </Grid>
+
+      {/* BESTSELLERS ROW */}
+      <Paper
+        sx={{
+          py: 5,
+          px: 2,
+          mt: 6
+        }}
+      >
+        <Typography
+          variant="h6"
+          component="h3"
+          sx={{ mb: 2 }}
+        >
+          Best Sellers
+        </Typography>
+        <Grid
+          container
+          spacing={1}
+        >
+          {bestsellers.map(deal => (
+            <Grid key={deal.title} item xs={12} md={3}>
+              <ProductCard
+                img={deal.image}
+                title={deal.title}
+                price={deal.price}
+                ratings={deal.rating.rate}
+                productId={deal.id}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
     </div>
   )
 }
 
-export default Home
+export async function getStaticProps() {
+  const res = await fetch('https://fakestoreapi.com/products')
+  const products = await res.json()
+  const topDeals = [products[0], products[5], products[10], products[15]]
+  const bestsellers = [products[1], products[6], products[11], products[16]]
+
+  return {
+    props: {
+      topDeals,
+      bestsellers
+    }
+  }
+}
+
