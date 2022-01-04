@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%'
   },
+  productItem: {
+    [theme.breakpoints.down('sm')]: {
+      margin: '8px 0px'
+    },
+  }
 }));
 
 export default function Home({ topDeals, bestsellers }) {
@@ -65,7 +70,7 @@ export default function Home({ topDeals, bestsellers }) {
         sx={{
           py: 5,
           px: 2,
-          mt: 6
+          mt: { xs: 1, md: 6 }
         }}
       >
         <Typography
@@ -81,7 +86,13 @@ export default function Home({ topDeals, bestsellers }) {
         // alignItems="stretch"
         >
           {topDeals.map(deal => (
-            <Grid key={deal.title} item xs={12} md={3}>
+            <Grid
+              key={deal.title}
+              item
+              xs={12}
+              md={3}
+              className={classes.productItem}
+            >
               <ProductCard
                 img={deal.image}
                 title={deal.title}
@@ -131,14 +142,20 @@ export default function Home({ topDeals, bestsellers }) {
           component="h3"
           sx={{ mb: 2 }}
         >
-          Best Sellers
+          BEST SELLERS
         </Typography>
         <Grid
           container
           spacing={1}
         >
           {bestsellers.map(deal => (
-            <Grid key={deal.title} item xs={12} md={3}>
+            <Grid
+              key={deal.title}
+              item
+              xs={12}
+              md={3}
+              className={classes.productItem}
+            >
               <ProductCard
                 img={deal.image}
                 title={deal.title}

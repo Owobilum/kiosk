@@ -219,7 +219,7 @@ export default function Header() {
                                     <FormControl fullWidth variant="outlined">
                                         <OutlinedInput
                                             id="outlined-adornment-search"
-                                            placeholder={"Search"}
+                                            placeholder={"Search Product or Category"}
                                             size="small"
                                             startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
                                         />
@@ -312,7 +312,7 @@ export default function Header() {
                             <FormControl fullWidth variant="outlined">
                                 <OutlinedInput
                                     id="outlined-adornment-search"
-                                    placeholder={"Search"}
+                                    placeholder={"Search Product or Category"}
                                     size="small"
                                     startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
                                 />
