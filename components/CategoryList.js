@@ -43,7 +43,7 @@ const categories = [
     },
 ]
 
-const CategoryCard = () => {
+const CategoryList = () => {
     const classes = useStyles()
     return (
         <>
@@ -75,4 +75,4 @@ const CategoryCard = () => {
     )
 }
 
-export default CategoryCard
+export default CategoryList

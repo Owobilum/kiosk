@@ -2,7 +2,8 @@ import { Grid, Typography } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 
 import ImageCarousel from "../components/ImageCarousel"
-import CategoryCard from "../components/CategoryCard";
+import CategoryList from "../components/CategoryList";
+import ProductCard from "../components/ProductCard"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,8 @@ const Home = () => {
         // border: 'solid red',
       }}
     >
+
+      {/* CAROUSEL ROW */}
       <Grid
         container
         justifyContent={"space-between"}
@@ -41,7 +44,7 @@ const Home = () => {
             display: { xs: 'none', md: 'flex' }
           }}
         >
-          <CategoryCard />
+          <CategoryList />
         </Grid>
         <Grid
           item
@@ -49,6 +52,17 @@ const Home = () => {
           md={8}
         >
           <ImageCarousel />
+        </Grid>
+
+      </Grid>
+
+      {/* TOP DEALS ROW */}
+      <Grid
+        container
+        style={{ marginTop: 32 }}
+      >
+        <Grid item xs={12}>
+          <ProductCard />
         </Grid>
 
       </Grid>
