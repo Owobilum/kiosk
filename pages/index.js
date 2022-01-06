@@ -123,6 +123,7 @@ export default function Home({ topDeals, bestsellers }) {
               <CategoryCard
                 img={category.img}
                 name={category.name}
+                path={category.path}
               />
             </Grid>
           ))

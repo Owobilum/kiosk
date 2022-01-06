@@ -1,4 +1,4 @@
-import { GET_PRODUCTS_IN_CATEGORY, GET_PRODUCTS, CLEAR_PRODUCTS_IN_CATEGORY } from "../actions/actionTypes"
+import { GET_PRODUCTS_IN_CATEGORY, GET_PRODUCTS, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT } from "../actions/actionTypes"
 
 const initialState = {
     products: [],
@@ -23,6 +23,11 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 categoryProducts: []
+            }
+        case GET_PRODUCT:
+            return {
+                ...state,
+                product: action.payload
             }
         default:
             return state
