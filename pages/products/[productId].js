@@ -49,7 +49,7 @@ export default function ProductPage() {
                 {/* COLUMN ONE */}
                 <Grid item xs={12} md={9}>
                     <Paper sx={{ px: 2, py: 2, pb: 8 }}>
-                        {!isLoading &&
+                        {!isLoading && product &&
                             <Grid
                                 item
                                 xs={12}
@@ -61,14 +61,12 @@ export default function ProductPage() {
                                     xs={5}
                                 >
                                     <Box>
-                                        {product &&
-                                            <img
-                                                src={product?.image}
-                                                // height="200px"
-                                                width="100%"
-                                                alt={product?.title}
-                                            />
-                                        }
+                                        <img
+                                            src={product.image}
+                                            // height="200px"
+                                            width="100%"
+                                            alt={product.title}
+                                        />
                                     </Box>
                                 </Grid>
                                 <Grid
@@ -157,7 +155,7 @@ export default function ProductPage() {
             {/* PRODUCT DETAILS SECTION */}
             <Grid container sx={{ mt: 3 }}>
                 <Grid item xs={12} md={9}>
-                    {!isLoading &&
+                    {!isLoading && product &&
                         <Paper sx={{ px: 2, py: 2 }}>
                             <Typography variant="h6" component="p">
                                 Product Details
