@@ -1,6 +1,6 @@
 import { Typography, Grid, Paper, Button, TextField } from '@mui/material'
 
-export default function ItemsFilter() {
+export default function ProductFilter() {
     return (
         <Paper style={{ padding: '5%' }}>
             <Grid container justifyContent={"space-between"}>

@@ -4,12 +4,13 @@ import { Typography, Grid, Paper, Box, Stack, CircularProgress } from '@mui/mate
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { makeStyles } from '@mui/styles'
+import FilterListIcon from '@mui/icons-material/FilterList';
 import { useDispatch, useSelector } from 'react-redux'
 
 import CategoryList from '../../components/CategoryList'
 import ProductCard from '../../components/ProductCard';
 import ProductCardAlternate from '../../components/ProductCardAlternate';
-import ItemsFilter from '../../components/ItemsFilter';
+import ProductFilter from '../../components/ProductFilter';
 import { clearProductsInCategory, getProductsInCategory } from '../../redux/actions/product'
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +18,9 @@ const useStyles = makeStyles(theme => ({
         marginTop: 100,
         [theme.breakpoints.up('md')]: {
             padding: '0px 5%'
+        },
+        [theme.breakpoints.down('sm')]: {
+            padding: '0px 1%'
         },
     },
     paper: {
@@ -38,7 +42,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     icon: {
-        color: '#c4c4c4',
+        color: 'darkgrey',
         cursor: 'pointer',
     },
     activeIcon: {
@@ -60,6 +64,7 @@ export default function CategoryPage() {
     const { categoryProducts } = useSelector(state => state.products)
     const [isGridView, setIsGridView] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
+    const [isFilter, setIsFilter] = useState(false)
 
     useEffect(() => {
         let path = `/category/${category}`
@@ -92,7 +97,7 @@ export default function CategoryPage() {
                         <CategoryList />
                     </Box>
                     <Box style={{ width: '100%' }}>
-                        <ItemsFilter />
+                        <ProductFilter />
                     </Box>
                 </Grid>
                 <Grid
@@ -116,7 +121,17 @@ export default function CategoryPage() {
                                         variant="body2"
                                     >
                                         {`${categoryProducts.length} products found`}
+                                        {<span
+                                            sx={{ display: { xs: 'inline', md: 'none', } }}
+                                            style={{ marginLeft: 8 }}
+                                        >
+                                            <FilterListIcon
+                                                className={isFilter ? classes.activeIcon : classes.icon}
+                                                onClick={() => setIsFilter(!isFilter)}
+                                            />
+                                        </span>}
                                     </Typography>
+
                                 }
                             </Box>
                             <Box>
@@ -131,6 +146,12 @@ export default function CategoryPage() {
                                 />
                             </Box>
                         </Box>
+                        {/* MOBILE VIEW FILTER */}
+                        {isFilter &&
+                            <Box sx={{ display: { xs: 'block', md: 'none' }, mb: 2 }}>
+                                <ProductFilter />
+                            </Box>
+                        }
                         {isGridView && !isLoading &&
                             <Grid
                                 container
