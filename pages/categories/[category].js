@@ -116,11 +116,11 @@ export default function CategoryPage() {
                         </Typography>
                         <Box className={classes.flexParent}>
                             <Box>
-                                {!isLoading &&
+                                {!isLoading && categoryProducts !== undefined &&
                                     <Typography
                                         variant="body2"
                                     >
-                                        {`${categoryProducts.length} products found`}
+                                        {`${categoryProducts?.length} products found`}
                                         {<span
                                             style={{ marginLeft: 8 }}
                                         >
