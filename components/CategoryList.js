@@ -1,14 +1,15 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { makeStyles } from '@mui/styles';
 import { Paper, Typography } from "@mui/material"
-import Image from 'next/image';
+
+import categories from '../utils/categories';
 
 const useStyles = makeStyles((theme) => ({
-    // const useStyles = makeStyles({
     paper: {
         width: '100%',
         [theme.breakpoints.up('md')]: {
             padding: '5%',
-            // paddingTop: 30
         },
     },
     heading: {
@@ -21,30 +22,11 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 8,
         cursor: 'pointer'
     }
-    // });
 }));
-
-const categories = [
-    {
-        name: 'Electronics',
-        icon: '/capacitor.png'
-    },
-    {
-        name: 'Jewelry',
-        icon: '/ring.png'
-    },
-    {
-        name: 'Mens Clothing',
-        icon: '/male.png'
-    },
-    {
-        name: 'Womens Clothing',
-        icon: '/female.png'
-    },
-]
 
 const CategoryList = () => {
     const classes = useStyles()
+    const router = useRouter()
     return (
         <>
             <Paper elevation={1} className={classes.paper}>
@@ -58,6 +40,7 @@ const CategoryList = () => {
                             variant="body2"
                             component="p"
                             className={classes.item}
+                            onClick={() => router.push(`/categories/${category.path}`)}
                         >
                             <Image
                                 src={category.icon}

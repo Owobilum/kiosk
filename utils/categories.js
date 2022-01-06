@@ -1,19 +1,28 @@
 const categories = [
     {
-        name: "men",
-        img: "url('/suits.jpg')"
+        name: "Men's Clothing",
+        img: "url('/suits.jpg')",
+        icon: '/male.png',
+        path: "men's clothing"
     },
     {
-        name: "women",
-        img: "url('/model.jpg')"
+        name: "Women's Clothing",
+        img: "url('/model.jpg')",
+        icon: '/female.png',
+        path: "women's clothing"
+
     },
     {
-        name: "jewelry",
-        img: "url('/model.jpg')"
+        name: "Jewelery",
+        img: "url('/model.jpg')",
+        icon: '/ring.png',
+        path: "jewelery"
     },
     {
-        name: "electronics",
-        img: "url('/model.jpg')"
+        name: "Electronics",
+        img: "url('/model.jpg')",
+        icon: "/capacitor.png",
+        path: "electronics"
     },
 ]
 

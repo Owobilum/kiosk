@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,7 +16,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Grid, Button, FormControl, OutlinedInput, InputAdornment } from '@mui/material'
-import Image from 'next/image';
 import { makeStyles } from '@mui/styles';
 
 import NavDrawer from './NavDrawer';
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
     const classes = useStyles()
+    const router = useRouter()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -187,6 +189,8 @@ export default function Header() {
                                 container
                                 xs={10}
                                 md={2}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => router.push('/')}
                             >
                                 <Box>
                                     <Image

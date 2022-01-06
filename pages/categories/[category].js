@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from "next/router"
-import Image from 'next/image'
 import { Typography, Grid, Paper, Box, Stack, CircularProgress } from '@mui/material'
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewListIcon from '@mui/icons-material/ViewList';
@@ -78,14 +77,9 @@ export default function CategoryPage() {
 
     return (
         <div className={classes.root}>
-            {/* {!isLoading && */}
             <Grid
                 container
                 justifyContent={"space-between"}
-                style={{
-                    // border: 'solid yellow', 
-                    // maxHeight: 400
-                }}
             >
                 <Grid
                     item
@@ -107,11 +101,6 @@ export default function CategoryPage() {
                     md={8}
                 >
                     <Paper
-                        // sx={{
-                        //     py: 5,
-                        //     px: 2,
-                        //     mt: { xs: 1, md: 6 }
-                        // }}
                         className={classes.paper}
                     >
                         <Typography
@@ -122,11 +111,13 @@ export default function CategoryPage() {
                         </Typography>
                         <Box className={classes.flexParent}>
                             <Box>
-                                <Typography
-                                    variant="body2"
-                                >
-                                    {`${categoryProducts.length} products found`}
-                                </Typography>
+                                {!isLoading &&
+                                    <Typography
+                                        variant="body2"
+                                    >
+                                        {`${categoryProducts.length} products found`}
+                                    </Typography>
+                                }
                             </Box>
                             <Box>
                                 <ViewListIcon
@@ -134,21 +125,10 @@ export default function CategoryPage() {
                                     onClick={() => setIsGridView(false)}
                                 />
                                 <GridViewIcon
-                                    // color="primary"
                                     sx={{ ml: 2 }}
                                     className={!isGridView ? classes.icon : classes.activeIcon}
                                     onClick={() => setIsGridView(true)}
                                 />
-                                {/* <Image
-                                        src='/listview.png'
-                                        height='16px'
-                                        width='16px'
-                                    />
-                                    <Image
-                                        src='/gridview.png'
-                                        height='16px'
-                                        width='16px'
-                                    /> */}
                             </Box>
                         </Box>
                         {isGridView && !isLoading &&
@@ -157,8 +137,6 @@ export default function CategoryPage() {
                                 spacing={2}
                             >
                                 {categoryProducts && categoryProducts.map(product => (
-                                    // if (isGridView) {
-                                    // return (
                                     <Grid
                                         key={product.title}
                                         item
@@ -174,8 +152,6 @@ export default function CategoryPage() {
                                             productId={product.id}
                                         />
                                     </Grid>
-                                    // )
-                                    // }
                                 ))}
                             </Grid>
                         }
@@ -202,15 +178,7 @@ export default function CategoryPage() {
 
                     </Paper>
                 </Grid>
-
             </Grid>
-            {/* } */}
-            {/* {
-                isLoading &&
-                <Paper className={classes.paper}>
-                    <CircularProgress color="primary" />
-                </Paper>
-            } */}
         </div>
     )
 }
