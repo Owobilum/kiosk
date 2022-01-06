@@ -61,12 +61,14 @@ export default function ProductPage() {
                                     xs={5}
                                 >
                                     <Box>
-                                        <img
-                                            src={product.image}
-                                            // height="200px"
-                                            width="100%"
-                                            alt={product.title}
-                                        />
+                                        {product &&
+                                            <img
+                                                src={product?.image}
+                                                // height="200px"
+                                                width="100%"
+                                                alt={product?.title}
+                                            />
+                                        }
                                     </Box>
                                 </Grid>
                                 <Grid
