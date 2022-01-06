@@ -9,6 +9,7 @@ import createEmotionCache from '../src/lib/createEmotionCache';
 import { wrapper, store, persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux';
+import Layout from '../components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -26,7 +27,9 @@ function MyApp(props) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </ThemeProvider>
         </PersistGate>
       </Provider>
