@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 import { makeStyles } from "@mui/styles"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
         overflow: 'hidden',
     },
@@ -27,9 +27,12 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        [theme.breakpoints.down('sm')]: {
+            padding: '5%'
+        }
     }
-})
+}))
 
 const CategoryCard = ({ img, name }) => {
     const classes = useStyles()

@@ -7,6 +7,7 @@ import CategoryList from "../components/CategoryList";
 import ProductCard from "../components/ProductCard"
 import CategoryCard from "../components/CategoryCard";
 import categories from '../utils/categories';
+import callApi from '../utils/callApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -172,8 +173,8 @@ export default function Home({ topDeals, bestsellers }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch('https://fakestoreapi.com/products')
-  const products = await res.json()
+  const res = await callApi('/')
+  const products = res.data
   const topDeals = [products[0], products[5], products[10], products[15]]
   const bestsellers = [products[1], products[6], products[11], products[16]]
 
