@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -19,11 +20,14 @@ const useStyles = makeStyles({
 })
 
 export default function ProductCard({ img, title, price, ratings, productId }) {
+    const router = useRouter()
     const classes = useStyles()
     const [isFavourite, setIsFavourite] = React.useState(false)
     return (
         <Card sx={{ maxWidth: { md: 300, height: "100%" } }}>
-            <CardActionArea>
+            <CardActionArea
+                onClick={() => router.push(`/products/${productId}`)}
+            >
                 <CardMedia
                     component="img"
                     height="140"

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { Box, Typography } from "@mui/material"
 import { makeStyles } from "@mui/styles"
 
@@ -34,10 +35,14 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const CategoryCard = ({ img, name }) => {
+const CategoryCard = ({ img, name, path }) => {
+    const router = useRouter()
     const classes = useStyles()
     return (
-        <div className={classes.root}>
+        <div
+            className={classes.root}
+            onClick={() => router.push(`/categories/${path}`)}
+        >
             <Box className={classes.container} style={{ backgroundImage: img }}>
                 <Box className={classes.child}>
                     <Typography

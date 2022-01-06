@@ -1,13 +1,20 @@
+import { useRouter } from "next/router";
 import { Typography, Rating, Button, Grid, Box } from "@mui/material";
 
 export default function ProductCardAlternate({ img, title, price, ratings, productId }) {
+    const router = useRouter()
     return (
         <div>
             <Grid
                 container
                 style={{ marginBottom: 0 }}
             >
-                <Grid item xs={3}>
+                <Grid
+                    item
+                    xs={3}
+                    onClick={() => router.push(`/products/${productId}`)}
+                    sx={{ cursor: 'pointer' }}
+                >
                     <img
                         src={img}
                         width="100%"
@@ -17,7 +24,8 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                 <Grid
                     item
                     xs={6}
-                    sx={{ px: 1 }}
+                    sx={{ px: 1, cursor: 'pointer' }}
+                    onClick={() => router.push(`/products/${productId}`)}
                 >
                     <Typography variant="body2" component="p" style={{ marginBottom: 12 }}>
                         {title}
