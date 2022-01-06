@@ -122,10 +122,12 @@ export default function CategoryPage() {
                                     >
                                         {`${categoryProducts.length} products found`}
                                         {<span
-                                            sx={{ display: { xs: 'inline', md: 'none', } }}
                                             style={{ marginLeft: 8 }}
                                         >
                                             <FilterListIcon
+                                                sx={{
+                                                    display: { xs: 'inline', md: 'none' }
+                                                }}
                                                 className={isFilter ? classes.activeIcon : classes.icon}
                                                 onClick={() => setIsFilter(!isFilter)}
                                             />
