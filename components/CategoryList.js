@@ -44,6 +44,7 @@ const CategoryList = () => {
                         >
                             <Image
                                 src={category.icon}
+                                alt=""
                                 height="15px"
                                 width="15px"
                             />

@@ -279,15 +279,15 @@ export default function Header() {
                                     </Typography>
                                 </Box>
                                 <Box
-                                    style={{ maxWidth: '100%' }}
+                                    style={{ maxWidth: '100%', cursor: 'pointer' }}
+                                    onClick={() => router.push('/cart')}
                                 >
                                     <IconButton
                                         size="large"
                                         edge="end"
-                                        aria-label="account of current user"
-                                        aria-controls={menuId}
-                                        aria-haspopup="true"
-                                        onClick={handleProfileMenuOpen}
+                                        aria-label="cart"
+                                        aria-controls={'primary-cart-page-navigation'}
+                                        aria-haspopup="false"
                                         color="inherit"
                                     >
                                         <Badge badgeContent={1} color="error">
