@@ -40,12 +40,13 @@ const CartItem = () => {
                         <img
                             src="/suits.jpg"
                             width="100%"
+                            alt="product"
                         />
                     </Grid>
                     <Grid item xs={8} sx={{ px: 1, py: 1 }}>
                         <Stack justifyContent="space-between" sx={{ height: '100%' }}>
                             <Typography variant="body2" component="p" sx={{ fontWeight: 'bold' }}>
-                                Men's Blazer
+                                Brown Blazer
                             </Typography>
                             <IconButton
                                 sx={{

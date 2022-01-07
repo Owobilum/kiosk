@@ -74,6 +74,7 @@ function Component1({ classes }) {
             <img
                 src="/tailor.jpg"
                 className={classes.img}
+                alt=""
             // style={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
         </Box>
@@ -86,6 +87,7 @@ function Component2({ classes }) {
             <img
                 src="/model.jpg"
                 className={classes.img}
+                alt=""
             // style={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
         </Box>
@@ -98,6 +100,7 @@ function Component3({ classes }) {
             <img
                 src="/suits.jpg"
                 className={classes.img}
+                alt=""
             // style={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
         </Box>
