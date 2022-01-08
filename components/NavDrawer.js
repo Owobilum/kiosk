@@ -29,7 +29,7 @@ export default function NavDrawer({ isOpen, toggleDrawer }) {
                     <ListItem
                         button
                         key={category.name}
-                        onClick={() => router.push(`categories/${category.path}`)}
+                        onClick={() => router.push(`/categories/${category.path}`)}
                     >
                         <ListItemIcon>
                             <Image
