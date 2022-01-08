@@ -38,7 +38,7 @@ export default function CheckoutPage() {
                         Payment Method
                     </Typography>
                     <Typography variant="caption" component="p" sx={{ color: 'red' }}>
-                        This uses paystack TEST keys. It is not a 'real' transaction.
+                        This uses paystack TEST keys. It is not a live transaction.
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={4}>
