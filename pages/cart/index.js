@@ -86,7 +86,11 @@ export default function CartPage() {
                 >
                     Continue Shopping
                 </Button>
-                <Button variant="contained" sx={{ color: '#fff' }}>
+                <Button
+                    variant="contained"
+                    sx={{ color: '#fff' }}
+                    onClick={() => router.push('/checkout')}
+                >
                     Checkout
                 </Button>
             </Box>

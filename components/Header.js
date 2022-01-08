@@ -17,6 +17,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Grid, Button, FormControl, OutlinedInput, InputAdornment } from '@mui/material'
 import { makeStyles } from '@mui/styles';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 import NavDrawer from './NavDrawer';
 
@@ -81,8 +83,9 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}><AccountCircle />My Account</MenuItem>
+            <MenuItem onClick={handleMenuClose}><ShoppingBagIcon />ORDERS</MenuItem>
+            <MenuItem onClick={handleMenuClose}><FavoriteIcon />SAVED ITEMS</MenuItem>
         </Menu>
     );
 
