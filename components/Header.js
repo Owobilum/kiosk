@@ -225,7 +225,7 @@ export default function Header() {
                                 <Grid item xs={9}>
                                     <FormControl fullWidth variant="outlined">
                                         <OutlinedInput
-                                            id="outlined-adornment-search"
+                                            id="outlined-adornment-search2"
                                             placeholder={"Search Product or Category"}
                                             size="small"
                                             startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}

@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 
 import Login from '../../components/Login'
-import Signup from '../../components/Signup'
+import CreateAccount from '../../components/CreateAccount'
 
 export default function AuthPage() {
     return (
@@ -26,7 +26,7 @@ export default function AuthPage() {
                 md={6}
                 sx={{ px: { md: 4 } }}
             >
-                <Signup />
+                <CreateAccount />
             </Grid>
         </Grid>
     )
