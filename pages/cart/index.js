@@ -92,7 +92,7 @@ export default function CartPage() {
 
             {
                 cart.length === 0 &&
-                <Typography variant="body1" variant="p">No products in cart</Typography>
+                <Typography variant="body1" component="p">No products in cart</Typography>
             }
             {cart && cart.length > 0 &&
                 <Box className={classes.sectionBox}>
