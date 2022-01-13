@@ -2,26 +2,26 @@ import { Grid, Typography } from "@mui/material"
 
 import { formatMoney } from "../utils/helpers"
 
-const CheckoutItem = () => {
+const CheckoutItem = ({ img, title, price, quantity }) => {
     return (
         <>
             <Grid container sx={{ px: 1, mb: 1 }}>
                 <Grid item xs={4}>
                     <img
-                        src="/suits.jpg"
+                        src={img}
                         width='100%'
-                        alt=""
+                        alt={title}
                     />
                 </Grid>
                 <Grid item xs={8} sx={{ px: 1 }}>
                     <Typography variant="body2" component="p" sx={{ fontWeight: 'bold' }}>
-                        Nice Blazer
+                        {title}
                     </Typography>
                     <Typography variant="body" component="p" color="primary">
-                        {formatMoney(10000)}
+                        {formatMoney(price)}
                     </Typography>
                     <Typography variant="body2" component="p">
-                        <span style={{ color: 'grey' }}>Quantity: </span> 1
+                        <span style={{ color: 'grey' }}>Quantity: </span> {quantity}
                     </Typography>
                 </Grid>
             </Grid>
