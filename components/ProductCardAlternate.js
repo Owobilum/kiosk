@@ -1,8 +1,16 @@
 import { useRouter } from "next/router";
 import { Typography, Rating, Button, Grid, Box } from "@mui/material";
+import { useDispatch } from "react-redux"
+
+import { formatMoney } from '../utils/helpers';
+import { addToCart } from '../redux/actions/cart';
 
 export default function ProductCardAlternate({ img, title, price, ratings, productId }) {
     const router = useRouter()
+    const dispatch = useDispatch()
+
+    const handleAddToCart = product => dispatch(addToCart(product))
+
     return (
         <div>
             <Grid
@@ -49,14 +57,14 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                             variant="body2"
                             component="p"
                         >
-                            ₦{price}
+                            {formatMoney(price)}
                         </Typography>
                         <Typography
                             variant="body2"
                             component="p"
                             sx={{ textDecoration: "line-through" }}
                         >
-                            ₦{price}
+                            {formatMoney(price + (Math.random() * 100))}
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -66,6 +74,7 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                                 display: { xs: 'none', md: 'flex' }
                             }}
                             style={{ width: '100%', color: '#fff' }}
+                            onClick={() => handleAddToCart({ img, title, price, ratings, productId, quantity: 1 })}
                         >
                             Add To Cart
                         </Button>
@@ -82,6 +91,7 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                 <Button
                     variant="contained"
                     style={{ width: '100%', color: '#fff' }}
+                    onClick={() => handleAddToCart({ img, title, price, ratings, productId, quantity: 1 })}
                 >
                     Add To Cart
                 </Button>
