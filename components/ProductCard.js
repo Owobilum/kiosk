@@ -7,6 +7,10 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Rating, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { makeStyles } from '@mui/styles';
+import { useDispatch } from "react-redux"
+
+import { formatMoney } from '../utils/helpers';
+import { addToCart } from '../redux/actions/cart';
 
 const useStyles = makeStyles({
     titleText: {
@@ -22,7 +26,11 @@ const useStyles = makeStyles({
 export default function ProductCard({ img, title, price, ratings, productId }) {
     const router = useRouter()
     const classes = useStyles()
+    const dispatch = useDispatch()
     const [isFavourite, setIsFavourite] = React.useState(false)
+
+    const handleAddToCart = product => dispatch(addToCart(product))
+
     return (
         <Card sx={{ maxWidth: { md: 300, height: "100%" } }}>
             <CardActionArea
@@ -44,7 +52,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
                         {title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        ₦{price}
+                        {formatMoney(price)}
                     </Typography>
                     <Typography
                         variant="body2"
@@ -52,7 +60,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
                         color="text.secondary"
                         sx={{ textDecoration: "line-through" }}
                     >
-                        ₦{price}
+                        {formatMoney(price + (Math.random() * 100))}
                     </Typography>
                     <Rating
                         name="disabled"
@@ -68,6 +76,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
                     color="primary"
                     variant="contained"
                     className={classes.btn}
+                    onClick={() => handleAddToCart({ img, title, price, ratings, productId, quantity: 1 })}
                 >
                     Add To Cart
                 </Button>
