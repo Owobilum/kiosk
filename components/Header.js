@@ -19,6 +19,7 @@ import { Grid, Button, FormControl, OutlinedInput, InputAdornment } from '@mui/m
 import { makeStyles } from '@mui/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import { useSelector } from 'react-redux';
 
 import NavDrawer from './NavDrawer';
 
@@ -34,8 +35,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
     const classes = useStyles()
     const router = useRouter()
+    const { cart } = useSelector(state => state.cart)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+    const productsInCart = cart.reduce((accumulator, { quantity }) => accumulator + quantity, 0)
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -293,7 +297,7 @@ export default function Header() {
                                         aria-haspopup="false"
                                         color="inherit"
                                     >
-                                        <Badge badgeContent={1} color="error">
+                                        <Badge badgeContent={productsInCart} color="error">
                                             <ShoppingCartIcon />
                                         </Badge>
                                     </IconButton>

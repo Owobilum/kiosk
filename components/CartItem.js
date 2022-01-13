@@ -3,6 +3,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { makeStyles } from "@mui/styles";
+import { useDispatch } from "react-redux";
+
+import { formatMoney } from "../utils/helpers";
+import { decreaseProductQuantity, removeFromCart, addToCart } from "../redux/actions/cart";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,8 +33,24 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const CartItem = () => {
+const CartItem = ({ img, title, price, ratings, productId, quantity }) => {
     const classes = useStyles()
+    const dispatch = useDispatch()
+
+    const handleAddToCart = product => dispatch(addToCart(product))
+
+    const handleRemoveFromCart = productId => dispatch(removeFromCart(productId))
+
+    const handleDecreaseQuantity = (productId, quantity) => {
+        if (quantity > 1) {
+            return dispatch(decreaseProductQuantity(productId))
+        } else {
+            return dispatch(removeFromCart(productId))
+        }
+    }
+
+
+
     return (
         <div className={classes.root}>
             <Grid container sx={{ backgroundColor: '#fff' }}>
@@ -38,15 +58,15 @@ const CartItem = () => {
                 <Grid item container xs={5}>
                     <Grid item xs={4} sx={{ px: 1, py: 1 }}>
                         <img
-                            src="/suits.jpg"
+                            src={img}
                             width="100%"
-                            alt="product"
+                            alt={title}
                         />
                     </Grid>
                     <Grid item xs={8} sx={{ px: 1, py: 1 }}>
                         <Stack justifyContent="space-between" sx={{ height: '100%' }}>
                             <Typography variant="body2" component="p" sx={{ fontWeight: 'bold' }}>
-                                Brown Blazer
+                                {title}
                             </Typography>
                             <IconButton
                                 sx={{
@@ -57,6 +77,7 @@ const CartItem = () => {
                                     fontSize: { xs: '12px' }
                                 }}
                                 size="small"
+                                onClick={() => handleRemoveFromCart(productId)}
                             >
                                 <DeleteIcon className={classes.deleteIcon} />Remove
                             </IconButton>
@@ -66,17 +87,19 @@ const CartItem = () => {
                 {/* COLUMN 2 */}
                 <Grid item container xs={3} alignItems="center" justifyContent="center" style={{ borderLeft: 'solid 1px #c4c4c4', borderRight: 'solid 1px #c4c4c4' }}>
                     <Grid item xs={4}>
-                        <IconButton>
+                        <IconButton onClick={() => handleDecreaseQuantity(productId, quantity)}>
                             <RemoveCircleIcon className={classes.icon} />
                         </IconButton>
                     </Grid>
                     <Grid item xs={4} sx={{ textAlign: 'center' }}>
                         <Typography variant="body2" className={classes.textMorph}>
-                            2
+                            {quantity}
                         </Typography>
                     </Grid>
                     <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
-                        <IconButton>
+                        <IconButton
+                            onClick={() => handleAddToCart({ img, title, price, ratings, productId, quantity: 1 })}
+                        >
                             <AddCircleIcon className={classes.icon} />
                         </IconButton>
                     </Grid>
@@ -84,13 +107,13 @@ const CartItem = () => {
                 {/* COLUMN 3 */}
                 <Grid item xs={2} container alignItems="center" justifyContent="center">
                     <Typography variant="body2" className={classes.unit}>
-                        ₦20,000
+                        {formatMoney(price)}
                     </Typography>
                 </Grid>
                 {/* COLUMN 4 */}
                 <Grid item xs={2} container alignItems="center" justifyContent="center" style={{ borderLeft: 'solid 1px #c4c4c4' }}>
                     <Typography variant="body2" className={classes.textMorph}>
-                        ₦20,000
+                        {formatMoney(price * quantity)}
                     </Typography>
                 </Grid>
             </Grid>
