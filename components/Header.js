@@ -22,6 +22,8 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { useSelector } from 'react-redux';
 
 import NavDrawer from './NavDrawer';
+import Search from './Search'
+import SearchMobile from './SearchMobile';
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
@@ -230,8 +232,9 @@ export default function Header() {
                                     display: { xs: 'none', md: 'flex' },
                                 }}
                             >
+                                <Search />
                                 {/* SEARCH FIELD */}
-                                <Grid item xs={9}>
+                                {/* <Grid item xs={9}>
                                     <FormControl fullWidth variant="outlined">
                                         <OutlinedInput
                                             id="outlined-adornment-search2"
@@ -240,16 +243,16 @@ export default function Header() {
                                             startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
                                         />
                                     </FormControl>
-                                </Grid>
+                                </Grid> */}
                                 {/* SEARCH BUTTON */}
-                                <Grid item xs={3}>
+                                {/* <Grid item xs={3}>
                                     <Button
                                         variant="contained"
                                         className={classes.btn}
                                     >
                                         Search
                                     </Button>
-                                </Grid>
+                                </Grid> */}
 
                             </Grid>
                         </Grid>
@@ -322,8 +325,8 @@ export default function Header() {
                 <Toolbar
                     sx={{ display: { md: 'none' } }}
                 >
-                    <Grid container spacing={1}>
-                        {/* SEARCH FIELD */}
+                    <SearchMobile />
+                    {/* <Grid container spacing={1}>
                         <Grid item xs={8}>
                             <FormControl fullWidth variant="outlined">
                                 <OutlinedInput
@@ -334,7 +337,6 @@ export default function Header() {
                                 />
                             </FormControl>
                         </Grid>
-                        {/* SEARCH BUTTON */}
                         <Grid item xs={3}>
                             <Button
                                 variant="contained"
@@ -344,7 +346,7 @@ export default function Header() {
                             </Button>
                         </Grid>
 
-                    </Grid>
+                    </Grid> */}
                 </Toolbar>
             </AppBar>
             <NavDrawer isOpen={isOpen} toggleDrawer={toggleDrawer} />

@@ -1,5 +1,5 @@
 import callApi from "../../utils/callApi"
-import { ADD_SAVED_ITEM, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT, GET_PRODUCTS_IN_CATEGORY, REMOVE_SAVED_ITEM } from "./actionTypes"
+import { ADD_SAVED_ITEM, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT, GET_PRODUCTS_IN_CATEGORY, REMOVE_SAVED_ITEM, SAVE_PRODUCTS } from "./actionTypes"
 
 
 export const getProductsInCategory = (url, cb) => async dispatch => {
@@ -33,6 +33,11 @@ export const getProduct = (productId, cb) => async dispatch => {
         cb()
     }
 }
+
+export const saveProducts = products => ({
+    type: SAVE_PRODUCTS,
+    payload: products
+})
 
 export const addSavedItem = item => ({
     type: ADD_SAVED_ITEM,
