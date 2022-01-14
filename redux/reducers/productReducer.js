@@ -1,19 +1,14 @@
-import { GET_PRODUCTS_IN_CATEGORY, GET_PRODUCTS, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT } from "../actions/actionTypes"
+import { GET_PRODUCTS_IN_CATEGORY, GET_PRODUCTS, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT, ADD_SAVED_ITEM, REMOVE_SAVED_ITEM, SAVE_PRODUCTS } from "../actions/actionTypes"
 
 const initialState = {
     products: [],
     categoryProducts: [],
     product: {},
-    loading: false
+    savedItems: []
 }
 
 export const productReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_PRODUCTS:
-            return {
-                ...state,
-                products: action.payload
-            }
         case GET_PRODUCTS_IN_CATEGORY:
             return {
                 ...state,
@@ -28,6 +23,25 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: action.payload
+            }
+        case SAVE_PRODUCTS:
+            return {
+                ...state,
+                products: action.payload
+            }
+        case ADD_SAVED_ITEM:
+            if ((state.savedItems.findIndex(item => item.productId === action.payload.productId)) === -1) {
+                return {
+                    ...state,
+                    savedItems: [...state.savedItems, action.payload]
+                }
+            } else {
+                return state
+            }
+        case REMOVE_SAVED_ITEM:
+            return {
+                ...state,
+                savedItems: state.savedItems.filter(item => item.productId !== action.payload)
             }
         default:
             return state

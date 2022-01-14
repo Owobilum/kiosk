@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Typography, Paper } from "@mui/material"
 import { makeStyles } from '@mui/styles';
+import { useDispatch } from 'react-redux';
 
 import ImageCarousel from "../components/ImageCarousel"
 import CategoryList from "../components/CategoryList";
@@ -8,6 +9,7 @@ import ProductCard from "../components/ProductCard"
 import CategoryCard from "../components/CategoryCard";
 import categories from '../utils/categories';
 import callApi from '../utils/callApi';
+import { saveProducts } from '../redux/actions/product';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,8 +27,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Home({ topDeals, bestsellers }) {
+export default function Home({ topDeals, bestsellers, products }) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    products && dispatch(saveProducts(products))
+  }, [dispatch])
 
   return (
     <div
@@ -182,7 +189,8 @@ export async function getStaticProps() {
   return {
     props: {
       topDeals,
-      bestsellers
+      bestsellers,
+      products
     }
   }
 }

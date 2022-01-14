@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux"
 
 import { formatMoney } from '../utils/helpers';
 import { addToCart } from '../redux/actions/cart';
+import { addSavedItem } from '../redux/actions/product';
 
 const useStyles = makeStyles({
     titleText: {
@@ -30,6 +31,12 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
     const [isFavourite, setIsFavourite] = React.useState(false)
 
     const handleAddToCart = product => dispatch(addToCart(product))
+
+    const handleSaveItem = product => {
+        setIsFavourite(true)
+        setTimeout(() => setIsFavourite(false), 250)
+        dispatch(addSavedItem(product))
+    }
 
     return (
         <Card sx={{ maxWidth: { md: 300, height: "100%" } }}>
@@ -82,7 +89,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
                 </Button>
                 <IconButton
                     size="small"
-                    onClick={() => setIsFavourite(!isFavourite)}
+                    onClick={() => handleSaveItem({ img, title, price, ratings, productId })}
                 >
                     <FavoriteIcon color={isFavourite ? "primary" : ""} />
                 </IconButton>

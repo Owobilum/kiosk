@@ -5,7 +5,8 @@ import { makeStyles } from '@mui/styles'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getProduct } from '../../redux/actions/product'
+import { addSavedItem, getProduct } from '../../redux/actions/product'
+import { addToCart } from '../../redux/actions/cart';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,6 +36,18 @@ export default function ProductPage() {
     const { product } = useSelector(state => state.products)
     const [isFavourite, setIsFavourite] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
+    const handleSaveItem = () => {
+        let item = { img: product?.image, title: product?.title, price: product?.price, ratings: product?.rating.rate, productId: product?.id }
+        setIsFavourite(true)
+        setTimeout(() => setIsFavourite(false), 250)
+        dispatch(addSavedItem(item))
+    }
+
+    const handleAddToCart = () => {
+        let item = { img: product?.image, title: product?.title, price: product?.price, ratings: product?.rating.rate, productId: product?.id, quantity: 1 }
+        dispatch(addToCart(item))
+    }
 
     useEffect(() => {
         if (productId) {
@@ -104,6 +117,7 @@ export default function ProductPage() {
                                     <Button
                                         variant="contained"
                                         sx={{ mt: 2, width: '100%', color: '#fff' }}
+                                        onClick={handleAddToCart}
                                     >
                                         Add to Cart
                                     </Button>
@@ -116,7 +130,7 @@ export default function ProductPage() {
                                 >
                                     <IconButton
                                         size="small"
-                                        onClick={() => setIsFavourite(!isFavourite)}
+                                        onClick={() => handleSaveItem()}
                                     >
                                         <FavoriteIcon color={isFavourite ? "primary" : ""} />
                                     </IconButton>
