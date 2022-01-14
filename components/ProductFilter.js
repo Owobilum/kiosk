@@ -1,6 +1,6 @@
-import { Typography, Grid, Paper, Button, TextField } from '@mui/material'
+import { Typography, Grid, Paper, Button, TextField, Box } from '@mui/material'
 
-export default function ProductFilter() {
+export default function ProductFilter({ handleFilter, handleResetFilter, setMin, setMax, min, max }) {
     return (
         <Paper style={{ padding: '5%' }}>
             <Grid container justifyContent={"space-between"}>
@@ -10,7 +10,10 @@ export default function ProductFilter() {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Button>
+                    <Button
+                        onClick={() => handleFilter(min, max)}
+                        disabled={!min && !max}
+                    >
                         Apply
                     </Button>
                 </Grid>
@@ -20,6 +23,9 @@ export default function ProductFilter() {
                     <TextField
                         placeholder='Min'
                         size='small'
+                        type="number"
+                        value={min || ""}
+                        onChange={e => setMin(e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={2} style={{ textAlign: 'center' }}>
@@ -31,9 +37,21 @@ export default function ProductFilter() {
                     <TextField
                         placeholder='Max'
                         size='small'
+                        type="number"
+                        value={max || ""}
+                        onChange={e => setMax(e.target.value)}
                     />
                 </Grid>
             </Grid>
-        </Paper>
+            <Box sx={{ mt: 1, textAlign: 'right' }}>
+                <Button
+                    onClick={() => handleResetFilter()}
+                    disabled={!min && !max}
+                >
+                    Reset
+                </Button>
+            </Box>
+
+        </Paper >
     )
 }

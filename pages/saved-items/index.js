@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function CategoryPage() {
+export default function SavedItemsPage() {
     const router = useRouter()
     const classes = useStyles()
     const dispatch = useDispatch()

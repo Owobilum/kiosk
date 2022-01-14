@@ -61,10 +61,28 @@ export default function CategoryPage() {
     const classes = useStyles()
     const dispatch = useDispatch()
     const { category } = router.query
-    const { categoryProducts } = useSelector(state => state.products)
+    const products = useSelector(state => state.products.categoryProducts)
     const [isGridView, setIsGridView] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [isFilter, setIsFilter] = useState(false)
+    const [categoryProducts, setCategoryProducts] = useState([])
+    const [min, setMin] = useState(0)
+    const [max, setMax] = useState(0)
+
+    const handleFilter = (min, max) => {
+        let filteredProducts = products.filter(product => (product.price >= min) && (product.price <= max))
+        setCategoryProducts(filteredProducts)
+    }
+
+    const handleResetFilter = () => {
+        setMin(0)
+        setMax(0)
+        setCategoryProducts(products)
+    }
+
+    useEffect(() => {
+        products && setCategoryProducts(products)
+    }, [products])
 
     useEffect(() => {
         let path = `/category/${category}`
@@ -97,7 +115,14 @@ export default function CategoryPage() {
                         <CategoryList />
                     </Box>
                     <Box style={{ width: '100%' }}>
-                        <ProductFilter />
+                        <ProductFilter
+                            handleFilter={handleFilter}
+                            handleResetFilter={handleResetFilter}
+                            setMin={setMin}
+                            setMax={setMax}
+                            min={min}
+                            max={max}
+                        />
                     </Box>
                 </Grid>
                 <Grid
@@ -151,7 +176,14 @@ export default function CategoryPage() {
                         {/* MOBILE VIEW FILTER */}
                         {isFilter &&
                             <Box sx={{ display: { xs: 'block', md: 'none' }, mb: 2 }}>
-                                <ProductFilter />
+                                <ProductFilter
+                                    handleFilter={handleFilter}
+                                    handleResetFilter={handleResetFilter}
+                                    setMin={setMin}
+                                    setMax={setMax}
+                                    min={min}
+                                    max={max}
+                                />
                             </Box>
                         }
                         {isGridView && !isLoading &&
