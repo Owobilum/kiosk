@@ -59,6 +59,11 @@ export default function Header() {
         handleMobileMenuClose();
     };
 
+    const handleViewSavedItems = () => {
+        handleMenuClose()
+        router.push('/saved-items')
+    }
+
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -89,7 +94,7 @@ export default function Header() {
         >
             <MenuItem onClick={handleMenuClose}><AccountCircle />My Account</MenuItem>
             <MenuItem onClick={handleMenuClose}><ShoppingBagIcon />ORDERS</MenuItem>
-            <MenuItem onClick={handleMenuClose}><FavoriteIcon />SAVED ITEMS</MenuItem>
+            <MenuItem onClick={handleViewSavedItems}><FavoriteIcon />SAVED ITEMS</MenuItem>
         </Menu>
     );
 
