@@ -19,11 +19,12 @@ import { Grid, Button, FormControl, OutlinedInput, InputAdornment } from '@mui/m
 import { makeStyles } from '@mui/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import NavDrawer from './NavDrawer';
 import Search from './Search'
 import SearchMobile from './SearchMobile';
+import { signInGoogle, signOutUser } from "../redux/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
@@ -37,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
     const classes = useStyles()
     const router = useRouter()
+    const dispatch = useDispatch()
     const { cart } = useSelector(state => state.cart)
+    const { user } = useSelector(state => state.auth)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -73,6 +76,14 @@ export default function Header() {
         setIsopen(open)
     };
 
+    const handleSignIn = () => {
+        dispatch(signInGoogle())
+        handleMenuClose()
+    }
+
+    const handleSignOut = () => dispatch(signOutUser())
+
+
     // const handleMobileMenuOpen = (event) => {
     //     setMobileMoreAnchorEl(event.currentTarget);
     // };
@@ -94,7 +105,8 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><AccountCircle />My Account</MenuItem>
+            {!user && <MenuItem onClick={handleSignIn}><AccountCircle />Sign In</MenuItem>}
+            {user && <MenuItem onClick={handleSignOut}><AccountCircle />Sign Out</MenuItem>}
             <MenuItem onClick={handleMenuClose}><ShoppingBagIcon />ORDERS</MenuItem>
             <MenuItem onClick={handleViewSavedItems}><FavoriteIcon />SAVED ITEMS</MenuItem>
         </Menu>
@@ -166,6 +178,7 @@ export default function Header() {
                     px: { xs: 1, md: 7 },
                     py: { xs: 1, md: 2 }
                 }}
+                elevation={0}
             >
                 <Toolbar>
                     <Grid
@@ -177,7 +190,7 @@ export default function Header() {
                             item
                             container
                             xs={8}
-                            md={10}
+                            // md={10}
                             sx={{ pt: 2 }}
                             alignItems={"flex-end"}
                         >
@@ -262,7 +275,7 @@ export default function Header() {
                             item
                             container
                             xs={4}
-                            md={2}
+                            // md={2}
                             justifyContent={"flex-end"}
                             alignItems={"flex-end"}
                         >
@@ -290,7 +303,7 @@ export default function Header() {
                                         component="span"
                                         sx={{ display: { xs: 'none', md: 'inline' } }}
                                     >
-                                        Account
+                                        {user?.displayName ? `Hi, ${user.displayName}` : 'Account'}
                                     </Typography>
                                 </Box>
                                 <Box

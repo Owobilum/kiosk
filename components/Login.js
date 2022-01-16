@@ -8,10 +8,14 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+
+import { signInGoogle } from "../redux/actions/auth";
 
 
 
 const Login = () => {
+    const dispatch = useDispatch()
 
     const schema = yup.object().shape({
         email: yup.string().email("must be valid email").required("required"),
@@ -41,6 +45,8 @@ const Login = () => {
     // React.useEffect(() => {
     //     setValue('email', 'lawrenceikpebe@gmail.com')
     // }, [])
+
+    const handleLogin = () => dispatch(signInGoogle())
 
     return (
         <Box>
@@ -117,7 +123,11 @@ const Login = () => {
                 </Button>
             </form>
 
-            <Button variant="outlined" sx={{ width: '100%', textTransform: 'none', my: 2 }}>
+            <Button
+                variant="outlined"
+                sx={{ width: '100%', textTransform: 'none', my: 2 }}
+                onClick={handleLogin}
+            >
                 Login With Google
             </Button>
         </Box>

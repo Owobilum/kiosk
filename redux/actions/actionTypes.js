@@ -11,3 +11,9 @@ export const ADD_TO_CART = "ADD_TO_CART"
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART"
 export const DECREASE_PRODUCT_QUANTITY = "DECREASE_PRODUCT_QUANTITY"
 export const EMPTY_CART = "EMPTY_CART"
+
+// AUTH
+export const SIGN_IN_WITH_GOOGLE = "SIGN_IN_WITH_GOOGLE"
+export const SET_AUTH_STATUS = "SET_AUTH_STATUS"
+export const SET_USER = "SET_USER"
+export const SIGN_OUT = "SIGN_OUT"
