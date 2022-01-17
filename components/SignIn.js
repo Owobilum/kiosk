@@ -18,7 +18,7 @@ import { signInWithEmail, signInWithGoogle } from "../redux/actions/auth";
 const SignIn = () => {
     const router = useRouter()
     const dispatch = useDispatch()
-    const { isLoading } = useSelector(state => state.auth)
+    const { isLoading, currentPath } = useSelector(state => state.auth)
 
     const schema = yup.object().shape({
         email: yup.string().email("must be valid email").required("required"),
@@ -44,7 +44,13 @@ const SignIn = () => {
     };
 
     const onSubmit = data => {
-        dispatch(signInWithEmail(data.email, data.password, () => router.push('/')))
+        dispatch(signInWithEmail(data.email, data.password, () => {
+            if (currentPath) {
+                router.push(currentPath)
+            } else {
+                router.push('/')
+            }
+        }))
     }
 
 
@@ -53,7 +59,13 @@ const SignIn = () => {
     //     setValue('email', 'lawrenceikpebe@gmail.com')
     // }, [])
 
-    const handleLogin = () => dispatch(signInWithGoogle(() => router.push('/')))
+    const handleLogin = () => dispatch(signInWithGoogle(() => {
+        if (currentPath) {
+            router.push(currentPath)
+        } else {
+            router.push('/')
+        }
+    }))
 
     return (
         <Box>

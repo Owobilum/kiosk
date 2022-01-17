@@ -1,4 +1,4 @@
-import { SET_AUTH_STATUS, SET_USER, SIGN_IN_WITH_GOOGLE, SET_AUTH_LOADING_START, SET_AUTH_LOADING_END } from './actionTypes'
+import { SET_AUTH_STATUS, SET_USER, SIGN_IN_WITH_GOOGLE, SET_AUTH_LOADING_START, SET_AUTH_LOADING_END, SET_CURRENT_PATH } from './actionTypes'
 import { doc, getDoc, collection, addDoc, setDoc } from "firebase/firestore";
 import {
     signInWithPopup, createUserWithEmailAndPassword,
@@ -31,6 +31,27 @@ export const setAuthLoadingStart = () => ({
 export const setAuthLoadingEnd = () => ({
     type: SET_AUTH_LOADING_END,
 })
+
+export const setCurrentPath = (path) => ({
+    type: SET_CURRENT_PATH,
+    payload: path
+})
+
+export const setAddress = (address, id, cb) => async dispatch => {
+    dispatch(setAuthLoadingStart())
+    const docRef = doc(db, "users", id)
+    try {
+        await setDoc(doc(db, "users", id), { address }, { merge: true })
+        const userSnap = await getDoc(docRef)
+        dispatch(setUser({ ...userSnap.data(), id }))
+        cb()
+    } catch (error) {
+        console.error(error)
+    } finally {
+        dispatch(setAuthLoadingEnd())
+    }
+
+}
 
 export const storeUserToDb = (email, id, displayName, otherDetails) => async dispatch => {
     const docRef = doc(db, "users", id); //queryReference

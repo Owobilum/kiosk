@@ -10,7 +10,8 @@ const persistConfig = {
     storage,
     whitelist: [
         'products',
-        'cart'
+        'cart',
+        'auth'
     ]
 }
 
