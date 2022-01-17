@@ -24,7 +24,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import NavDrawer from './NavDrawer';
 import Search from './Search'
 import SearchMobile from './SearchMobile';
-import { signInGoogle, signOutUser } from "../redux/actions/auth";
+import { signInWithGoogle, signOutUser } from "../redux/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
@@ -77,7 +77,8 @@ export default function Header() {
     };
 
     const handleSignIn = () => {
-        dispatch(signInGoogle())
+        // dispatch(signInWithGoogle())
+        router.push('/signin')
         handleMenuClose()
     }
 

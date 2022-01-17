@@ -1,9 +1,10 @@
 
 
-import { SET_AUTH_STATUS, SET_USER, SIGN_IN_WITH_GOOGLE } from "../actions/actionTypes"
+import { SET_AUTH_STATUS, SET_USER, SIGN_IN_WITH_GOOGLE, SET_AUTH_LOADING_START, SET_AUTH_LOADING_END } from "../actions/actionTypes"
 
 const initialState = {
-    user: null
+    user: null,
+    isLoading: false
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -12,6 +13,16 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload
+            }
+        case SET_AUTH_LOADING_START:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case SET_AUTH_LOADING_END:
+            return {
+                ...state,
+                isLoading: false
             }
         default:
             return state

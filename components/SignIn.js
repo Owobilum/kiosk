@@ -1,21 +1,24 @@
 import React from "react"
+import { useRouter } from "next/router";
 import {
     Box, Button, TextField, Typography, FormControl, Input, InputAdornment,
-    InputLabel, IconButton, OutlinedInput
+    InputLabel, IconButton, OutlinedInput, CircularProgress
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { signInGoogle } from "../redux/actions/auth";
+import { signInWithEmail, signInWithGoogle } from "../redux/actions/auth";
 
 
 
-const Login = () => {
+const SignIn = () => {
+    const router = useRouter()
     const dispatch = useDispatch()
+    const { isLoading } = useSelector(state => state.auth)
 
     const schema = yup.object().shape({
         email: yup.string().email("must be valid email").required("required"),
@@ -40,18 +43,22 @@ const Login = () => {
         event.preventDefault();
     };
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        dispatch(signInWithEmail(data.email, data.password, () => router.push('/')))
+    }
+
+
 
     // React.useEffect(() => {
     //     setValue('email', 'lawrenceikpebe@gmail.com')
     // }, [])
 
-    const handleLogin = () => dispatch(signInGoogle())
+    const handleLogin = () => dispatch(signInWithGoogle(() => router.push('/')))
 
     return (
         <Box>
             <Typography variant="h6" component="h6" sx={{ mb: 3 }}>
-                Login
+                Sign In
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ mb: 2 }}>
@@ -113,13 +120,13 @@ const Login = () => {
                 >
                     <Button
                         sx={{ textTransform: 'none' }}
-                        onClick={e => e.preventDefault()}
+                        onClick={e => router.push('/reset-password')}
                     >
-                        Forgot Password
+                        Forgot Password?
                     </Button>
                 </Box>
                 <Button variant="contained" sx={{ width: '100%', color: '#fff', mt: 3 }} type="submit">
-                    Login
+                    {isLoading ? <CircularProgress sx={{ color: '#fff' }} /> : 'Sign In'}
                 </Button>
             </form>
 
@@ -128,10 +135,10 @@ const Login = () => {
                 sx={{ width: '100%', textTransform: 'none', my: 2 }}
                 onClick={handleLogin}
             >
-                Login With Google
+                Sign In With Google
             </Button>
         </Box>
     )
 }
 
-export default Login
+export default SignIn

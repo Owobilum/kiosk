@@ -15,64 +15,63 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig); //APP HAS TO BE INITIALIZED 1st BEFORE USING AUTH OR FIRESTORE
 
-const db = getFirestore()
-const provider = new GoogleAuthProvider();
+export const db = getFirestore()
+export const googleProvider = new GoogleAuthProvider();
 export const auth = getAuth();
 
 
-export const storeUserToDb = async (name, email, date, userId) => {
+// export const storeUserToDb = async (name, email, date, userId) => {
 
-    const docRef = doc(db, "users", userId); //queryReference
-    const docSnap = await getDoc(docRef); //qurerySnapshot
+//     const docRef = doc(db, "users", userId); //queryReference
+//     const docSnap = await getDoc(docRef); //qurerySnapshot
 
-    if (docSnap.exists()) {
-        console.log("Document Data Exists:", docSnap.data());
-    } else {
-        // doc.data() will be undefined in this case
-        try {
-            let data = {
-                displayName: name,
-                email: email,
-                createdAt: date
-            }
-            // const docRef = await addDoc(collection(db, "users",userId), {
-            const docRef = await setDoc(doc(db, "users", userId), data)
-            // console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
-    }
+//     if (docSnap.exists()) {
+//         // console.log("Document Data Exists:", docSnap.data());
+//         return
+//     } else {
+//         // doc.data() will be undefined in this case
+//         try {
+//             let data = {
+//                 displayName: name,
+//                 email: email,
+//                 createdAt: date
+//             }
+//             // const docRef = await addDoc(collection(db, "users",userId), {
+//             const docRef = await setDoc(doc(db, "users", userId), data)
+//             // console.log("Document written with ID: ", docRef.id);
+//         } catch (e) {
+//             console.error("Error adding document: ", e);
+//         }
+//     }
+// }
 
-    return docSnap
-}
+// export const signInWithGoogle = () => {
+//     return signInWithPopup(auth, provider)
+//         .then((result) => {
+//             console.log(result)
+//             // This gives you a Google Access Token. You can use it to access the Google API.
+//             const credential = GoogleAuthProvider.credentialFromResult(result);
+//             const token = credential.accessToken;
+//             // The signed-in user info.
+//             const user = result.user;
 
-export const signInWithGoogle = () => {
-    return signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log(result)
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
+//             // ...
+//             return { user, token, credential }
 
-            // ...
-            return { user, token, credential }
+//             // storeUserToDb(user.displayName,user.email,new Date(),user.uid)
+//         }).catch((error) => {
+//             // Handle Errors here.
+//             const errorCode = error.code;
+//             const errorMessage = error.message;
+//             // The email of the user's account used.
+//             const email = error.email;
+//             // The AuthCredential type that was used.
+//             const credential = GoogleAuthProvider.credentialFromError(error);
+//             // ...
+//         });
+// }
 
-            // storeUserToDb(user.displayName,user.email,new Date(),user.uid)
-        }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
-}
-
-export const signOut = () => auth.signOut()
+// export const signOut = () => auth.signOut()
 
 export const signUpWithEmail = async (email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
