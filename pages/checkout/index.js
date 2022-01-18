@@ -1,5 +1,9 @@
-import { useRouter } from 'next/dist/client/router'
-import { Grid, Box, Typography, Button } from '@mui/material'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import {
+    Grid, Box, Typography, Button, TextField, Dialog, DialogActions,
+    DialogContent, DialogContentText, DialogTitle, CircularProgress
+} from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { usePaystackPayment } from 'react-paystack'
 import swal from 'sweetalert2'
@@ -7,20 +11,75 @@ import swal from 'sweetalert2'
 import { formatMoney } from '../../utils/helpers'
 import CheckoutItem from '../../components/CheckoutItem'
 import { emptyCart } from '../../redux/actions/cart'
+import { setAddress, setCurrentPath } from '../../redux/actions/auth'
+import { getOrders, saveOrder } from '../../redux/actions/order'
+import withAuth from '../../utils/hocs/withAuth'
 
-export default function CheckoutPage() {
+function CheckoutPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { cart } = useSelector(state => state.cart)
+    const { user, isLoading } = useSelector(state => state.auth)
+    const isLoadingOrder = useSelector(state => state.order.isLoading)
+    const [open, setOpen] = useState(false);
+    const [newAddress, setNewAddress] = useState("")
     const numberInCart = cart.reduce((accumulator, { quantity }) => accumulator + quantity, 0)
     const totalCost = cart.reduce((accumulator, { quantity, price }) => accumulator + (quantity * price), 0)
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => setOpen(false)
+
+    const handleAddress = () => {
+        if (newAddress) {
+            dispatch(setAddress(newAddress, user.id, () => {
+                handleClose();
+            }))
+        } else {
+            handleClose();
+        }
+    };
+
+    const handlePayment = () => {
+        if (user?.address) {
+            initializePayment(onSuccess, onClose)
+        } else {
+            swal.fire({
+                icon: 'info',
+                title: 'Please add a shipping address',
+                confirmButtonColor: '#D48166'
+            })
+        }
+    }
+
+    const handleSaveOrder = ({ reference }) => {
+        dispatch(saveOrder(user.id, cart, reference, () => {
+            swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Order placed successfully',
+                confirmButtonColor: '#D48166',
+                confirmButtonText: 'Proceed'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(emptyCart())
+                    dispatch(setCurrentPath(null))
+                    router.push('/')
+                }
+            })
+        }))
+
+        // dispatch(getOrders(user.id))
+    }
 
     let randomEmail = `${Math.floor(Math.random() * 11223344)}@kioskng.com`
 
     const config = {
         reference: (new Date()).getTime().toString(),
         email: randomEmail,
-        amount: totalCost * 100,
+        amount: Math.floor(totalCost * 100),
         publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_TEST_KEY}`
     };
 
@@ -29,18 +88,7 @@ export default function CheckoutPage() {
     const onSuccess = (reference) => {
         // Implementation for whatever you want to do with reference and after success call.
         // console.log(reference);
-        swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Order placed successfully',
-            confirmButtonColor: '#D48166',
-            confirmButtonText: 'Proceed'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(emptyCart())
-                router.push('/')
-            }
-        })
+        handleSaveOrder(reference)
     };
 
     const onClose = () => {
@@ -62,12 +110,12 @@ export default function CheckoutPage() {
                         <Typography variant="h6">
                             Address Details
                         </Typography>
-                        <Button color="primary">
-                            Change
+                        <Button color="primary" onClick={handleClickOpen}>
+                            {user?.address ? 'Change' : 'Add'}
                         </Button>
                     </Box>
                     <Typography variant="body2" component="p" sx={{ mb: 5 }}>
-                        No. 45 Somplace, Soomwire
+                        {user?.address ? user.address : 'No address found'}
                     </Typography>
                     <Typography variant="h6" component="h6">
                         Delivery Method
@@ -78,9 +126,9 @@ export default function CheckoutPage() {
                     <Button
                         variant="contained"
                         sx={{ width: '100%', color: '#fff', my: 2 }}
-                        onClick={() => initializePayment(onSuccess, onClose)}
+                        onClick={handlePayment}
                     >
-                        Proceed To Make Payment
+                        {isLoadingOrder ? <CircularProgress sx={{ color: '#fff' }} /> : 'Proceed To Make Payment'}
                     </Button>
                     <Typography variant="h6" component="h6">
                         Payment Method
@@ -148,6 +196,32 @@ export default function CheckoutPage() {
                     </Typography>
                 </Grid>
             </Grid>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Address</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {/* To subscribe to this website, please enter your email address here. We
+                        will send updates occasionally. */}
+                        Please input the address you would like your order delivered to. Kindly include your
+                        house number, street and L.G.A
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        label="Address"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={newAddress}
+                        onChange={(e) => setNewAddress(e.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleAddress}>{isLoading ? <CircularProgress /> : 'Save'}</Button>
+                </DialogActions>
+            </Dialog>
         </Box >
     )
 }
+
+export default withAuth(CheckoutPage)

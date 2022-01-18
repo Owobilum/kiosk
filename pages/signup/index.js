@@ -9,9 +9,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useDispatch } from 'react-redux';
+
+import { signUpWithEmail } from '../../redux/actions/auth';
 
 export default function SignupPage() {
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const schema = yup.object().shape({
         email: yup.string().email("must be valid email").required("required"),
@@ -31,7 +35,14 @@ export default function SignupPage() {
         resolver: yupResolver(schema)
     });
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        let details = {
+            displayName: `${data.firstname} ${data.lastname}`,
+            address: data.address,
+            phone: data.phone
+        }
+        dispatch(signUpWithEmail(data.email, data.password, details, () => router.push('/')))
+    }
 
     const [showPassword, setShowPassword] = React.useState(false)
 
@@ -196,8 +207,8 @@ export default function SignupPage() {
                     Already have an account?
                 </Typography>
                 <Button
-                    onClick={() => router.push('/login')}
-                >Login</Button>
+                    onClick={() => router.push('/signin')}
+                >Sign In</Button>
             </Box>
         </Box>
     )

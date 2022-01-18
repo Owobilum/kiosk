@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import { Typography, Box, Grid, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import CartItem from "../../components/CartItem";
 import { formatMoney } from "../../utils/helpers"
+import { setCurrentPath } from "../../redux/actions/auth";
 
 const useStyles = makeStyles(theme => ({
     cartRoot: {
@@ -42,9 +43,20 @@ const useStyles = makeStyles(theme => ({
 export default function CartPage() {
     const classes = useStyles()
     const router = useRouter()
+    const dispatch = useDispatch()
     const { cart } = useSelector(state => state.cart)
+    const { user } = useSelector(state => state.auth)
     const totalCost = cart.reduce((accumulator, { quantity, price }) => accumulator + (quantity * price), 0)
     const numberInCart = cart.reduce((accumulator, { quantity }) => accumulator + quantity, 0)
+
+    const handleCheckout = () => {
+        if (user) {
+            router.push('/checkout')
+        } else {
+            dispatch(setCurrentPath('/checkout'))
+            router.push('/signin')
+        }
+    }
 
     return (
         <div className={classes.cartRoot}>
@@ -117,7 +129,7 @@ export default function CartPage() {
                     <Button
                         variant="contained"
                         sx={{ color: '#fff' }}
-                        onClick={() => router.push('/checkout')}
+                        onClick={handleCheckout}
                     >
                         Checkout
                     </Button>

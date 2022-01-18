@@ -1,8 +1,13 @@
 import { useRouter } from "next/router"
 import { Typography, Button, Box } from "@mui/material"
+import { useDispatch } from "react-redux"
+
+import { signInWithGoogle } from "../redux/actions/auth"
 
 const CreateAccount = () => {
     const router = useRouter()
+    const dispatch = useDispatch()
+
     return (
         <Box
             sx={{
@@ -31,7 +36,11 @@ const CreateAccount = () => {
                 >
                     Create an Account Via Email
                 </Button>
-                <Button variant="outlined" sx={{ width: '100%', textTransform: 'none', my: 2 }}>
+                <Button
+                    variant="outlined"
+                    sx={{ width: '100%', textTransform: 'none', my: 2 }}
+                    onClick={() => dispatch(signInWithGoogle(() => router.push('/')))}
+                >
                     Sign Up With Google
                 </Button>
             </Box>
