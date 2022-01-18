@@ -20,8 +20,9 @@ export const setUser = (user) => ({
     payload: user
 })
 
-export const signOutUser = () => () => {
+export const signOutUser = () => dispatch => {
     auth.signOut()
+    dispatch(setUser(null))
 }
 
 export const setAuthLoadingStart = () => ({

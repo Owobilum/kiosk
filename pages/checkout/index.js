@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/dist/client/router'
+import { useRouter } from 'next/router'
 import {
     Grid, Box, Typography, Button, TextField, Dialog, DialogActions,
     DialogContent, DialogContentText, DialogTitle, CircularProgress
@@ -11,13 +11,16 @@ import swal from 'sweetalert2'
 import { formatMoney } from '../../utils/helpers'
 import CheckoutItem from '../../components/CheckoutItem'
 import { emptyCart } from '../../redux/actions/cart'
-import { setAddress } from '../../redux/actions/auth'
+import { setAddress, setCurrentPath } from '../../redux/actions/auth'
+import { getOrders, saveOrder } from '../../redux/actions/order'
+import withAuth from '../../utils/hocs/withAuth'
 
-export default function CheckoutPage() {
+function CheckoutPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { cart } = useSelector(state => state.cart)
     const { user, isLoading } = useSelector(state => state.auth)
+    const isLoadingOrder = useSelector(state => state.order.isLoading)
     const [open, setOpen] = useState(false);
     const [newAddress, setNewAddress] = useState("")
     const numberInCart = cart.reduce((accumulator, { quantity }) => accumulator + quantity, 0)
@@ -51,13 +54,32 @@ export default function CheckoutPage() {
         }
     }
 
+    const handleSaveOrder = ({ reference }) => {
+        dispatch(saveOrder(user.id, cart, reference, () => {
+            swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Order placed successfully',
+                confirmButtonColor: '#D48166',
+                confirmButtonText: 'Proceed'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(emptyCart())
+                    dispatch(setCurrentPath(null))
+                    router.push('/')
+                }
+            })
+        }))
+
+        // dispatch(getOrders(user.id))
+    }
 
     let randomEmail = `${Math.floor(Math.random() * 11223344)}@kioskng.com`
 
     const config = {
         reference: (new Date()).getTime().toString(),
         email: randomEmail,
-        amount: totalCost * 100,
+        amount: Math.floor(totalCost * 100),
         publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_TEST_KEY}`
     };
 
@@ -66,18 +88,7 @@ export default function CheckoutPage() {
     const onSuccess = (reference) => {
         // Implementation for whatever you want to do with reference and after success call.
         // console.log(reference);
-        swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Order placed successfully',
-            confirmButtonColor: '#D48166',
-            confirmButtonText: 'Proceed'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(emptyCart())
-                router.push('/')
-            }
-        })
+        handleSaveOrder(reference)
     };
 
     const onClose = () => {
@@ -117,7 +128,7 @@ export default function CheckoutPage() {
                         sx={{ width: '100%', color: '#fff', my: 2 }}
                         onClick={handlePayment}
                     >
-                        Proceed To Make Payment
+                        {isLoadingOrder ? <CircularProgress sx={{ color: '#fff' }} /> : 'Proceed To Make Payment'}
                     </Button>
                     <Typography variant="h6" component="h6">
                         Payment Method
@@ -212,3 +223,5 @@ export default function CheckoutPage() {
         </Box >
     )
 }
+
+export default withAuth(CheckoutPage)

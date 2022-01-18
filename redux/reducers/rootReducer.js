@@ -4,6 +4,7 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import { cartReducer } from "./cartReducer"
 import { authReducer } from "./authReducer"
+import orderReducer from "./orderReducer"
 
 const persistConfig = {
     key: 'root',
@@ -18,7 +19,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
     products: productReducer,
     cart: cartReducer,
-    auth: authReducer
+    auth: authReducer,
+    order: orderReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
