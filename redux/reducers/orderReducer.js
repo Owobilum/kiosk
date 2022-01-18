@@ -1,4 +1,4 @@
-import { ORDER_LOADING_END, ORDER_LOADING_START, SAVE_ORDER } from "../actions/actionTypes"
+import { ORDER_LOADING_END, ORDER_LOADING_START, SAVE_ORDER, GET_ORDERS } from "../actions/actionTypes"
 
 const InitialState = {
     orders: [],
@@ -8,6 +8,11 @@ const InitialState = {
 const orderReducer = (state = InitialState, action) => {
     switch (action.type) {
         case SAVE_ORDER:
+            return {
+                ...state,
+                orders: action.payload
+            }
+        case GET_ORDERS:
             return {
                 ...state,
                 orders: action.payload

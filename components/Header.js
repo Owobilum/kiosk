@@ -69,6 +69,11 @@ export default function Header() {
         router.push('/saved-items')
     }
 
+    const handleViewOrders = () => {
+        handleMenuClose()
+        router.push('/my-orders')
+    }
+
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -108,7 +113,7 @@ export default function Header() {
         >
             {!user && <MenuItem onClick={handleSignIn}><AccountCircle />Sign In</MenuItem>}
             {user && <MenuItem onClick={handleSignOut}><AccountCircle />Sign Out</MenuItem>}
-            <MenuItem onClick={handleMenuClose}><ShoppingBagIcon />ORDERS</MenuItem>
+            <MenuItem onClick={handleViewOrders}><ShoppingBagIcon />ORDERS</MenuItem>
             <MenuItem onClick={handleViewSavedItems}><FavoriteIcon />SAVED ITEMS</MenuItem>
         </Menu>
     );

@@ -2,7 +2,7 @@ import { doc, getDoc, getDocs, collection, addDoc, serverTimestamp, setDoc } fro
 import swal from 'sweetalert2'
 
 import { db } from "../../utils/firebase"
-import { ORDER_LOADING_END, ORDER_LOADING_START } from "./actionTypes";
+import { GET_ORDERS, ORDER_LOADING_END, ORDER_LOADING_START } from "./actionTypes";
 
 export const orderLoadingStart = () => ({
     type: ORDER_LOADING_START
@@ -17,7 +17,7 @@ export const saveOrder = (id, items, reference, cb) => async dispatch => {
     let data = {
         items,
         status: "Pending",
-        date: new Date(),
+        date: new Date().toDateString(),
         paymentReference: reference
     }
     try {
@@ -42,10 +42,16 @@ export const getOrders = (id) => async dispatch => {
     dispatch(orderLoadingStart())
     try {
         const querySnapshot = await getDocs(collection(db, `users/${id}/orders`));
+        let orders = []
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
+            orders.push({ id: doc.id, data: doc.data() })
             console.log(doc.id, " => ", doc.data());
         });
+        dispatch({
+            type: GET_ORDERS,
+            payload: orders
+        })
     } catch (error) {
         console.error(error)
     } finally {

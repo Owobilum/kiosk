@@ -25,5 +25,6 @@ export const SET_ADDRESS = "SET_ADDRESS"
 
 //Orders
 export const SAVE_ORDER = "SAVE_ORDER"
+export const GET_ORDERS = "GET_ORDERS"
 export const ORDER_LOADING_START = "ORDER_LOADING_START"
 export const ORDER_LOADING_END = "ORDER_LOADING_END"
