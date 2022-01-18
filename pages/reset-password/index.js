@@ -50,7 +50,7 @@ export default function PasswordResetPage() {
                 >
                     <InfoIcon color="primary" fontSize='small' />
                     Please input your email address associated with Kiosk and
-                    we'll send a password reset link to the email
+                    we will send a password reset link to the email
                 </Typography>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Controller

@@ -202,7 +202,7 @@ function CheckoutPage() {
                     <DialogContentText>
                         {/* To subscribe to this website, please enter your email address here. We
                         will send updates occasionally. */}
-                        Please input the address you'd like your order delivered to. Kindly include your
+                        Please input the address you would like your order delivered to. Kindly include your
                         house number, street and L.G.A
                     </DialogContentText>
                     <TextField
