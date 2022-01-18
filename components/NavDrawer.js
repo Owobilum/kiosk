@@ -8,15 +8,22 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
 // import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 import categories from '../utils/categories'
+import { signOutUser } from '../redux/actions/auth';
 
 export default function NavDrawer({ isOpen, toggleDrawer }) {
     const router = useRouter()
+    const dispatch = useDispatch()
+    const { user } = useSelector(state => state.auth)
+
+    const handleSignOut = () => dispatch(signOutUser())
+
     const list = () => (
         <Box
             sx={{ width: 250 }}
@@ -44,14 +51,35 @@ export default function NavDrawer({ isOpen, toggleDrawer }) {
                 ))}
             </List>
             <Divider />
+            <Typography
+                variant="caption"
+                component="p"
+                sx={{ paddingLeft: '16px' }}
+            >
+                {user?.displayName ? `Signed in as ${user.displayName}` : ''}
+            </Typography>
+            <Divider />
             <List>
-                <ListItem button>
-                    <ListItemIcon>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary={"Sign in"} />
-                </ListItem>
+                {!user &&
+                    <ListItem button onClick={() => router.push('/signin')}>
+                        <ListItemIcon>
+                            <AccountCircle />
+                        </ListItemIcon>
+                        <ListItemText primary={"Sign in"} />
+                    </ListItem>
+                }
+                {user &&
+                    <ListItem button onClick={handleSignOut}>
+                        <ListItemIcon>
+                            <AccountCircle />
+                        </ListItemIcon>
+                        <ListItemText primary={"Sign out"} />
+                    </ListItem>
+                }
             </List>
+
+
+
             {/* <List>
                 {['', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem button key={text}>
