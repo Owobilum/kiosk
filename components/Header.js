@@ -3,28 +3,29 @@ import Image from 'next/image';
 import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Grid, Button, FormControl, OutlinedInput, InputAdornment } from '@mui/material'
+// import Toolbar from '@mui/material/Toolbar';
+// import IconButton from '@mui/material/IconButton';
+// import Typography from '@mui/material/Typography';
+// import Badge from '@mui/material/Badge';
+// import MenuItem from '@mui/material/MenuItem';
+// import Menu from '@mui/material/Menu';
+import { Grid, Toolbar, IconButton, Typography, Badge, MenuItem, Menu } from '@mui/material'
 import { makeStyles } from '@mui/styles';
+import MenuIcon from '@mui/icons-material/Menu';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector, useDispatch } from 'react-redux';
+// import SearchIcon from '@mui/icons-material/Search';
+// import MailIcon from '@mui/icons-material/Mail';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
+
 
 import NavDrawer from './NavDrawer';
 import Search from './Search'
 import SearchMobile from './SearchMobile';
-import { signInWithGoogle, signOutUser, setCurrentPath } from "../redux/actions/auth";
+import { signOutUser, setCurrentPath } from "../redux/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
@@ -47,7 +48,6 @@ export default function Header() {
     const productsInCart = cart.reduce((accumulator, { quantity }) => accumulator + quantity, 0)
 
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const [isOpen, setIsopen] = React.useState(false)
 
@@ -86,17 +86,11 @@ export default function Header() {
     };
 
     const handleSignIn = () => {
-        // dispatch(signInWithGoogle())
         router.push('/signin')
         handleMenuClose()
     }
 
     const handleSignOut = () => dispatch(signOutUser())
-
-
-    // const handleMobileMenuOpen = (event) => {
-    //     setMobileMoreAnchorEl(event.currentTarget);
-    // };
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -117,60 +111,8 @@ export default function Header() {
         >
             {!user && <MenuItem onClick={handleSignIn}><AccountCircle />Sign In</MenuItem>}
             {user && <MenuItem onClick={handleSignOut}><AccountCircle />Sign Out</MenuItem>}
-            <MenuItem onClick={handleViewOrders}><ShoppingBagIcon /> MY ORDERS</MenuItem>
-            <MenuItem onClick={handleViewSavedItems}><FavoriteIcon />SAVED ITEMS</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
+            <MenuItem onClick={handleViewOrders}><ShoppingBagIcon /> My Orders</MenuItem>
+            <MenuItem onClick={handleViewSavedItems}><FavoriteIcon />Saved Items</MenuItem>
         </Menu>
     );
 
@@ -181,7 +123,6 @@ export default function Header() {
             }}
         >
             <AppBar
-                // position="static"
                 position="fixed"
                 className={classes.appbar}
                 sx={{
@@ -200,7 +141,6 @@ export default function Header() {
                             item
                             container
                             xs={8}
-                            // md={10}
                             sx={{ pt: 2 }}
                             alignItems={"flex-end"}
                         >
@@ -285,7 +225,6 @@ export default function Header() {
                             item
                             container
                             xs={4}
-                            // md={2}
                             justifyContent={"flex-end"}
                             alignItems={"flex-end"}
                         >
@@ -373,7 +312,6 @@ export default function Header() {
                 </Toolbar>
             </AppBar>
             <NavDrawer isOpen={isOpen} toggleDrawer={toggleDrawer} />
-            {renderMobileMenu}
             {renderMenu}
         </Box>
     );

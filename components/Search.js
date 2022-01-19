@@ -68,6 +68,7 @@ const Search = () => {
                         px: 2,
                         position: 'absolute',
                         zIndex: 200,
+                        display: { xs: 'none', md: 'block' }
                     }}
                 >
                     {
