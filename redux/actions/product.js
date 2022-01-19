@@ -6,6 +6,7 @@ import {
     GET_PRODUCTS_IN_CATEGORY, REMOVE_SAVED_ITEM, SAVE_PRODUCTS
 } from "./actionTypes"
 import { MODAL_BTN_COLOR } from "../../utils/constants"
+import { notifyUser } from '../../utils/helpers'
 
 
 export const getProductsInCategory = (url, cb) => async dispatch => {
@@ -57,10 +58,13 @@ export const saveProducts = products => ({
     payload: products
 })
 
-export const addSavedItem = item => ({
-    type: ADD_SAVED_ITEM,
-    payload: item
-})
+export const addSavedItem = item => dispatch => {
+    dispatch({
+        type: ADD_SAVED_ITEM,
+        payload: item
+    })
+    notifyUser(`${item.title} added to wishlist`)
+}
 
 export const removeSavedItem = id => ({
     type: REMOVE_SAVED_ITEM,
