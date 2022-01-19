@@ -3,12 +3,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-// import Toolbar from '@mui/material/Toolbar';
-// import IconButton from '@mui/material/IconButton';
-// import Typography from '@mui/material/Typography';
-// import Badge from '@mui/material/Badge';
-// import MenuItem from '@mui/material/MenuItem';
-// import Menu from '@mui/material/Menu';
 import { Grid, Toolbar, IconButton, Typography, Badge, MenuItem, Menu } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -17,10 +11,6 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector, useDispatch } from 'react-redux';
-// import SearchIcon from '@mui/icons-material/Search';
-// import MailIcon from '@mui/icons-material/Mail';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
-
 
 import NavDrawer from './NavDrawer';
 import Search from './Search'
@@ -196,27 +186,6 @@ export default function Header() {
                                 }}
                             >
                                 <Search />
-                                {/* SEARCH FIELD */}
-                                {/* <Grid item xs={9}>
-                                    <FormControl fullWidth variant="outlined">
-                                        <OutlinedInput
-                                            id="outlined-adornment-search2"
-                                            placeholder={"Search Product or Category"}
-                                            size="small"
-                                            startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
-                                        />
-                                    </FormControl>
-                                </Grid> */}
-                                {/* SEARCH BUTTON */}
-                                {/* <Grid item xs={3}>
-                                    <Button
-                                        variant="contained"
-                                        className={classes.btn}
-                                    >
-                                        Search
-                                    </Button>
-                                </Grid> */}
-
                             </Grid>
                         </Grid>
 
@@ -288,27 +257,6 @@ export default function Header() {
                     sx={{ display: { md: 'none' } }}
                 >
                     <SearchMobile />
-                    {/* <Grid container spacing={1}>
-                        <Grid item xs={8}>
-                            <FormControl fullWidth variant="outlined">
-                                <OutlinedInput
-                                    id="outlined-adornment-search"
-                                    placeholder={"Search Product or Category"}
-                                    size="small"
-                                    startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Button
-                                variant="contained"
-                                className={classes.btn}
-                            >
-                                Search
-                            </Button>
-                        </Grid>
-
-                    </Grid> */}
                 </Toolbar>
             </AppBar>
             <NavDrawer isOpen={isOpen} toggleDrawer={toggleDrawer} />

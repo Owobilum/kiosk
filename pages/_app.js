@@ -21,6 +21,8 @@ function MyApp(props) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>Kiosk</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
