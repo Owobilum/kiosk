@@ -24,7 +24,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import NavDrawer from './NavDrawer';
 import Search from './Search'
 import SearchMobile from './SearchMobile';
-import { signInWithGoogle, signOutUser } from "../redux/actions/auth";
+import { signInWithGoogle, signOutUser, setCurrentPath } from "../redux/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
@@ -71,6 +71,10 @@ export default function Header() {
 
     const handleViewOrders = () => {
         handleMenuClose()
+        if (!user) {
+            dispatch(setCurrentPath('/my-orders'))
+            return router.push('/signin')
+        }
         router.push('/my-orders')
     }
 
@@ -113,7 +117,7 @@ export default function Header() {
         >
             {!user && <MenuItem onClick={handleSignIn}><AccountCircle />Sign In</MenuItem>}
             {user && <MenuItem onClick={handleSignOut}><AccountCircle />Sign Out</MenuItem>}
-            <MenuItem onClick={handleViewOrders}><ShoppingBagIcon />ORDERS</MenuItem>
+            <MenuItem onClick={handleViewOrders}><ShoppingBagIcon /> MY ORDERS</MenuItem>
             <MenuItem onClick={handleViewSavedItems}><FavoriteIcon />SAVED ITEMS</MenuItem>
         </Menu>
     );
