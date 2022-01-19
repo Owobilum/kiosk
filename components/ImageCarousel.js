@@ -11,22 +11,25 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
     caro: {
-        // border: 'solid green',
+        [theme.breakpoints.up('md')]: {
+            minHeight: 350,
+        },
         maxHeight: '100%',
-        minHeight: 350
     },
     img: {
-        objectFit: 'cover',
-        height: '100%',
+        // objectFit: 'cover',
         width: '100%',
-        borderRadius: 5
+        height: 'auto',
+        borderRadius: 5,
+        maxHeight: 340
     }
 
 }));
 
 const RootStyle = styled("div")(({ theme }) => ({
-    // border: 'solid blue',
-    height: 350
+    [theme.breakpoints.up('md')]: {
+        height: 350,
+    },
 }));
 
 export default function ImageCarousel() {
@@ -70,12 +73,11 @@ export default function ImageCarousel() {
 
 function Component1({ classes }) {
     return (
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", maxHeight: '100%', }}>
             <img
                 src="/tailor.jpg"
                 className={classes.img}
                 alt=""
-            // style={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
         </Box>
     );
@@ -83,12 +85,11 @@ function Component1({ classes }) {
 
 function Component2({ classes }) {
     return (
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", maxHeight: '100%', }}>
             <img
                 src="/model.jpg"
                 className={classes.img}
                 alt=""
-            // style={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
         </Box>
     );
@@ -96,12 +97,11 @@ function Component2({ classes }) {
 
 function Component3({ classes }) {
     return (
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", maxHeight: '100%', }}>
             <img
                 src="/suits.jpg"
                 className={classes.img}
                 alt=""
-            // style={{ objectFit: 'cover', height: '100%', width: '100%' }}
             />
         </Box>
     );

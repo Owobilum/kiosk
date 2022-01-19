@@ -50,7 +50,6 @@ export default function Home({ topDeals, bestsellers, products }) {
         container
         justifyContent={"space-between"}
         style={{
-          // border: 'solid yellow', 
           maxHeight: 400
         }}
       >
@@ -58,7 +57,7 @@ export default function Home({ topDeals, bestsellers, products }) {
           item
           md={3}
           sx={{
-            display: { xs: 'none', md: 'flex' }
+            display: { xs: 'none', md: 'flex' },
           }}
         >
           <CategoryList />

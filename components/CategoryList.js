@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             padding: '5%',
         },
+        maxHeight: 340,
     },
     heading: {
         marginBottom: 32

@@ -13,14 +13,14 @@ const categories = [
 
     },
     {
-        name: "Jewelery",
-        img: "url('/model.jpg')",
+        name: "Jewellery",
+        img: "url('/jewellery.jpg')",
         icon: '/ring.png',
         path: "jewelery"
     },
     {
         name: "Electronics",
-        img: "url('/model.jpg')",
+        img: "url('/tailor.jpg')",
         icon: "/capacitor.png",
         path: "electronics"
     },
