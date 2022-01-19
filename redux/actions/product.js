@@ -1,5 +1,11 @@
+import swal from 'sweetalert2'
+
 import callApi from "../../utils/callApi"
-import { ADD_SAVED_ITEM, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT, GET_PRODUCTS_IN_CATEGORY, REMOVE_SAVED_ITEM, SAVE_PRODUCTS } from "./actionTypes"
+import {
+    ADD_SAVED_ITEM, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT,
+    GET_PRODUCTS_IN_CATEGORY, REMOVE_SAVED_ITEM, SAVE_PRODUCTS
+} from "./actionTypes"
+import { MODAL_BTN_COLOR } from "../../utils/constants"
 
 
 export const getProductsInCategory = (url, cb) => async dispatch => {
@@ -11,7 +17,13 @@ export const getProductsInCategory = (url, cb) => async dispatch => {
             payload: data
         })
     } catch (error) {
-        console.error('***THE ERROR IS... ', error)
+        console.error(error)
+        swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error?.message,
+            confirmButtonColor: MODAL_BTN_COLOR,
+        })
     } finally {
         cb()
     }
@@ -28,7 +40,13 @@ export const getProduct = (productId, cb) => async dispatch => {
             payload: data
         })
     } catch (error) {
-        console.error('***THE ERROR IS... ', error)
+        console.error(error)
+        swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error?.message,
+            confirmButtonColor: MODAL_BTN_COLOR,
+        })
     } finally {
         cb()
     }

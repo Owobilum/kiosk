@@ -1,0 +1,1 @@
+export const MODAL_BTN_COLOR = '#D48166'

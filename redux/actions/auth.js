@@ -7,6 +7,7 @@ import {
 import swal from 'sweetalert2'
 
 import { db, auth, googleProvider } from "../../utils/firebase"
+import { MODAL_BTN_COLOR } from '../../utils/constants';
 
 
 
@@ -48,6 +49,12 @@ export const setAddress = (address, id, cb) => async dispatch => {
         cb()
     } catch (error) {
         console.error(error)
+        swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error?.message,
+            confirmButtonColor: MODAL_BTN_COLOR,
+        })
     } finally {
         dispatch(setAuthLoadingEnd())
     }
@@ -63,7 +70,6 @@ export const storeUserToDb = (email, id, displayName, otherDetails) => async dis
         return
     } else {
         let data
-        // doc.data() will be undefined in this case
         otherDetails && displayName ? data = {
             displayName,
             email,
@@ -91,7 +97,7 @@ export const storeUserToDb = (email, id, displayName, otherDetails) => async dis
                 icon: 'error',
                 title: 'Error',
                 text: error?.message,
-                confirmButtonColor: '#D48166',
+                confirmButtonColor: MODAL_BTN_COLOR,
             })
         }
     }
@@ -111,7 +117,7 @@ export const signInWithGoogle = (cb) => async dispatch => {
             icon: 'error',
             title: 'Error',
             text: error?.message,
-            confirmButtonColor: '#D48166',
+            confirmButtonColor: MODAL_BTN_COLOR,
         })
     } finally {
         dispatch(setAuthLoadingEnd())
@@ -132,7 +138,7 @@ export const signUpWithEmail = (email, password, otherDetails, cb) => async disp
             icon: 'error',
             title: 'Error',
             text: error?.message,
-            confirmButtonColor: '#D48166',
+            confirmButtonColor: MODAL_BTN_COLOR,
         })
     } finally {
         dispatch(setAuthLoadingEnd())
@@ -154,7 +160,7 @@ export const signInWithEmail = (email, password, cb) => async dispatch => {
             icon: 'error',
             title: 'Error',
             text: error?.message,
-            confirmButtonColor: '#D48166',
+            confirmButtonColor: MODAL_BTN_COLOR,
         })
     }
     finally {
@@ -170,7 +176,7 @@ export const resetPassword = email => async dispatch => {
             icon: 'success',
             title: 'Success',
             text: 'Password recovery email sent',
-            confirmButtonColor: '#D48166',
+            confirmButtonColor: MODAL_BTN_COLOR,
         })
     } catch (error) {
         console.error(error)
@@ -178,7 +184,7 @@ export const resetPassword = email => async dispatch => {
             icon: 'error',
             title: 'Error',
             text: error?.message,
-            confirmButtonColor: '#D48166',
+            confirmButtonColor: MODAL_BTN_COLOR,
         })
     } finally {
         dispatch(setAuthLoadingEnd())
