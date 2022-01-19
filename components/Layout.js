@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import { onAuthStateChanged } from '@firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+// import { onAuthStateChanged } from '@firebase/auth';
+import { useDispatch } from 'react-redux';
 
 import Footer from "./Footer"
 import Header from "./Header"
-import { auth, } from '../utils/firebase';
-import { setUser, storeUserToDb } from '../redux/actions/auth';
+import { setCurrentPath } from '../redux/actions/auth'
+// import { auth, } from '../utils/firebase';
+// import { setUser, storeUserToDb } from '../redux/actions/auth';
 
 const Layout = ({ children }) => {
     const dispatch = useDispatch()
-    const currentUser = useSelector(state => state.auth.user)
+    // const currentUser = useSelector(state => state.auth.user)
+
+    useEffect(() => {
+        return () => {
+            dispatch(setCurrentPath(null))
+        }
+    }, [])
 
 
     // useEffect(() => {

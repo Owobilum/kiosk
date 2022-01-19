@@ -63,11 +63,13 @@ const SearchMobile = () => {
             {results && results.length > 0 &&
                 <Card
                     sx={{
+                        height: '200px',
                         mt: 32,
                         py: 2,
                         px: 2,
                         position: 'absolute',
-                        zIndex: 200,
+                        zIndex: 100,
+                        display: { md: 'none' },
                     }}
                 >
                     {

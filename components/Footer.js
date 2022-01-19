@@ -8,16 +8,11 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const useStyles = makeStyles(theme => ({
     root: {
+
         color: "#fff",
-        backgroundColor: "#964A32",
+        backgroundColor: theme.palette.primary.dark,
         marginTop: 48,
         padding: '5%',
-        // [theme.breakpoints.up('md')]: {
-        //     padding: '5%',
-        // },
-        // [theme.breakpoints.down('sm')]: {
-        //     padding: '5%',
-        // },
     },
     social: {
         cursor: 'pointer',
@@ -32,6 +27,9 @@ const useStyles = makeStyles(theme => ({
     item: {
         marginBottom: 10,
         cursor: 'pointer'
+    },
+    item2: {
+        marginBottom: 10,
     },
     copyrightBox: {
         borderTop: 'solid 1px #c4c4c4',
@@ -68,21 +66,21 @@ export default function Footer() {
                     <Typography
                         variant="body2"
                         component="p"
-                        className={classes.item}
+                        className={classes.item2}
                     >
                         (+234) 8055445102
                     </Typography>
                     <Typography
                         variant="body2"
                         component="p"
-                        className={classes.item}
+                        className={classes.item2}
                     >
                         support@kiosk.com.ng
                     </Typography>
                     <Typography
                         variant="body2"
                         component="p"
-                        className={classes.item}
+                        className={classes.item2}
                     >
                         No. 22 Romford Street, Wuse 2, Abuja
                     </Typography>

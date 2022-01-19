@@ -1,8 +1,9 @@
-import { doc, getDoc, getDocs, collection, addDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { getDocs, collection, addDoc } from "firebase/firestore";
 import swal from 'sweetalert2'
 
 import { db } from "../../utils/firebase"
 import { GET_ORDERS, ORDER_LOADING_END, ORDER_LOADING_START } from "./actionTypes";
+import { MODAL_BTN_COLOR } from "../../utils/constants";
 
 export const orderLoadingStart = () => ({
     type: ORDER_LOADING_START
@@ -23,14 +24,13 @@ export const saveOrder = (id, items, reference, cb) => async dispatch => {
     try {
         await addDoc(collection(db, `users/${id}/orders`), data)
         cb()
-        console.log('ORDER SAVED')
     } catch (error) {
         console.error(error)
         swal.fire({
             icon: 'error',
             title: 'Error',
             text: error?.message,
-            confirmButtonColor: '#D48166',
+            confirmButtonColor: MODAL_BTN_COLOR
         })
     } finally {
         dispatch(orderLoadingEnd())
@@ -46,7 +46,6 @@ export const getOrders = (id) => async dispatch => {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             orders.push({ id: doc.id, data: doc.data() })
-            console.log(doc.id, " => ", doc.data());
         });
         dispatch({
             type: GET_ORDERS,
@@ -54,6 +53,12 @@ export const getOrders = (id) => async dispatch => {
         })
     } catch (error) {
         console.error(error)
+        swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error?.message,
+            confirmButtonColor: MODAL_BTN_COLOR
+        })
     } finally {
         dispatch(orderLoadingEnd())
     }

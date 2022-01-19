@@ -30,7 +30,9 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
     const dispatch = useDispatch()
     const [isFavourite, setIsFavourite] = React.useState(false)
 
-    const handleAddToCart = product => dispatch(addToCart(product))
+    const handleAddToCart = product => {
+        dispatch(addToCart(product))
+    }
 
     const handleSaveItem = product => {
         setIsFavourite(true)
@@ -67,7 +69,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
                         color="text.secondary"
                         sx={{ textDecoration: "line-through" }}
                     >
-                        {formatMoney(price + (Math.random() * 100))}
+                        {formatMoney(price + (45 * price / 100))}
                     </Typography>
                     <Rating
                         name="disabled"

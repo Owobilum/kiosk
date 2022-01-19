@@ -64,7 +64,7 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                             component="p"
                             sx={{ textDecoration: "line-through" }}
                         >
-                            {formatMoney(price + (Math.random() * 100))}
+                            {formatMoney(price + ((45 * price / 100)))}
                         </Typography>
                     </Grid>
                     <Grid item>
