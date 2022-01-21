@@ -70,7 +70,14 @@ export default function CategoryPage() {
     const [max, setMax] = useState(0)
 
     const handleFilter = (min, max) => {
-        let filteredProducts = products.filter(product => (product.price >= min) && (product.price <= max))
+        let filteredProducts
+        if (min && !max) {
+            filteredProducts = products.filter(product => product.price >= min)
+        } else if (max && !min) {
+            filteredProducts = products.filter(product => (product.price <= max))
+        } else {
+            filteredProducts = products.filter(product => (product.price >= min) && (product.price <= max))
+        }
         setCategoryProducts(filteredProducts)
     }
 
