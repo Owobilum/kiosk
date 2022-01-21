@@ -137,8 +137,13 @@ const SignIn = () => {
                         Forgot Password?
                     </Button>
                 </Box>
-                <Button variant="contained" sx={{ width: '100%', color: '#fff', mt: 3 }} type="submit">
-                    {isLoading ? <CircularProgress sx={{ color: '#fff' }} /> : 'Sign In'}
+                <Button
+                    variant="contained"
+                    sx={{ width: '100%', color: '#fff', mt: 3 }}
+                    type="submit"
+                    disabled={isLoading}
+                >
+                    Sign In
                 </Button>
             </form>
 
@@ -146,6 +151,7 @@ const SignIn = () => {
                 variant="outlined"
                 sx={{ width: '100%', textTransform: 'none', my: 2 }}
                 onClick={handleLogin}
+                disabled={isLoading}
             >
                 Sign In With Google
             </Button>

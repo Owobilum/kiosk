@@ -1,12 +1,13 @@
 import { useRouter } from "next/router"
 import { Typography, Button, Box } from "@mui/material"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { signInWithGoogle } from "../redux/actions/auth"
 
 const CreateAccount = () => {
     const router = useRouter()
     const dispatch = useDispatch()
+    const { isLoading } = useSelector(state => state.auth)
 
     return (
         <Box
@@ -40,6 +41,7 @@ const CreateAccount = () => {
                     variant="outlined"
                     sx={{ width: '100%', textTransform: 'none', my: 2 }}
                     onClick={() => dispatch(signInWithGoogle(() => router.push('/')))}
+                    disabled={isLoading}
                 >
                     Sign Up With Google
                 </Button>
