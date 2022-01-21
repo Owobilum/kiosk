@@ -30,7 +30,12 @@ export const productReducer = (state = initialState, action) => {
                 products: action.payload
             }
         case ADD_SAVED_ITEM:
-            if ((state.savedItems.findIndex(item => item.productId === action.payload.productId)) === -1) {
+            if (!state.savedItems) {
+                return {
+                    ...state,
+                    savedItems: [...action.payload]
+                }
+            } else if ((state.savedItems.findIndex(item => item.productId === action.payload.productId)) === -1) {
                 return {
                     ...state,
                     savedItems: [...state.savedItems, action.payload]

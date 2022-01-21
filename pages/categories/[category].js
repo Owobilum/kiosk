@@ -70,7 +70,14 @@ export default function CategoryPage() {
     const [max, setMax] = useState(0)
 
     const handleFilter = (min, max) => {
-        let filteredProducts = products.filter(product => (product.price >= min) && (product.price <= max))
+        let filteredProducts
+        if (min && !max) {
+            filteredProducts = products.filter(product => product.price >= min)
+        } else if (max && !min) {
+            filteredProducts = products.filter(product => (product.price <= max))
+        } else {
+            filteredProducts = products.filter(product => (product.price >= min) && (product.price <= max))
+        }
         setCategoryProducts(filteredProducts)
     }
 
@@ -103,6 +110,7 @@ export default function CategoryPage() {
             <Grid
                 container
                 justifyContent={"space-between"}
+                spacing={2}
             >
                 <Grid
                     item
@@ -111,7 +119,7 @@ export default function CategoryPage() {
                         display: { xs: 'none', md: 'block' }
                     }}
                 >
-                    <Box style={{ width: '100%', marginBottom: 32 }}>
+                    <Box style={{ width: '100%', marginBottom: 16 }}>
                         <CategoryList />
                     </Box>
                     <Box style={{ width: '100%' }}>
@@ -128,7 +136,7 @@ export default function CategoryPage() {
                 <Grid
                     item
                     xs={12}
-                    md={8}
+                    md={9}
                 >
                     <Paper
                         className={classes.paper}

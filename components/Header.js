@@ -203,7 +203,7 @@ export default function Header() {
                             >
                                 <Box
                                     style={{ maxWidth: '100%' }}
-
+                                    onClick={handleProfileMenuOpen}
                                 >
                                     <IconButton
                                         size="large"
@@ -211,7 +211,6 @@ export default function Header() {
                                         aria-label="account of current user"
                                         aria-controls={menuId}
                                         aria-haspopup="true"
-                                        onClick={handleProfileMenuOpen}
                                         color="inherit"
                                     >
                                         <AccountCircle />
@@ -219,7 +218,7 @@ export default function Header() {
                                     <Typography
                                         variant="body2"
                                         component="span"
-                                        sx={{ display: { xs: 'none', md: 'inline' } }}
+                                        sx={{ display: { xs: 'none', md: 'inline', cursor: 'pointer' } }}
                                     >
                                         {user?.displayName ? `Hi, ${user.displayName}` : 'Account'}
                                     </Typography>

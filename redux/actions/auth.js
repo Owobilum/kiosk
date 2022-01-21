@@ -104,6 +104,7 @@ export const storeUserToDb = (email, id, displayName, otherDetails) => async dis
 }
 
 export const signInWithGoogle = (cb) => async dispatch => {
+    dispatch(setAuthLoadingStart())
     try {
         const res = await signInWithPopup(auth, googleProvider)
         if (res?.user) {

@@ -2,20 +2,21 @@ import React from 'react'
 import { useRouter } from 'next/router';
 import {
     Box, Button, TextField, Typography, FormControl, Input, InputAdornment,
-    InputLabel, IconButton, OutlinedInput, Grid
+    InputLabel, IconButton, OutlinedInput, Grid, CircularProgress
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { signUpWithEmail } from '../../redux/actions/auth';
 
 export default function SignupPage() {
     const router = useRouter()
     const dispatch = useDispatch()
+    const { isLoading } = useSelector(state => state.auth)
 
     const schema = yup.object().shape({
         email: yup.string().email("must be valid email").required("required"),
@@ -198,8 +199,10 @@ export default function SignupPage() {
                     type="submit"
                     sx={{ width: '100%', color: '#fff' }}
                     variant="contained"
+                    disabled={isLoading}
+
                 >
-                    Create Account
+                    {isLoading ? <CircularProgress /> : 'Create Account'}
                 </Button>
             </form>
             <Box sx={{ my: 3, textAlign: 'center' }}>

@@ -41,7 +41,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
     }
 
     return (
-        <Card sx={{ maxWidth: { md: 300, height: "100%" } }}>
+        <Card sx={{ maxWidth: { md: 300, height: "100%" } }} elevation={0}>
             <CardActionArea
                 onClick={() => router.push(`/products/${productId}`)}
             >

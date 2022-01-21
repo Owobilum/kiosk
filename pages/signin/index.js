@@ -1,33 +1,40 @@
-import { Grid } from '@mui/material'
+import { CircularProgress, Grid, Box } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 import SignIn from '../../components/SignIn'
 import CreateAccount from '../../components/CreateAccount'
 
 export default function AuthPage() {
+    const { isLoading } = useSelector(state => state.auth)
     return (
-        <Grid
-            container
-            spacing={5}
+        <Box
             sx={{
                 padding: { xs: '2%', md: '5%' },
             }}
         >
+            {isLoading &&
+                <Box sx={{ textAlign: 'center', my: 1 }}><CircularProgress /></Box>}
             <Grid
-                item
-                xs={12}
-                md={6}
-                sx={{ px: { md: 4 } }}
+                container
+                spacing={5}
             >
-                <SignIn />
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    sx={{ px: { md: 4 } }}
+                >
+                    <SignIn />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    sx={{ px: { md: 4 } }}
+                >
+                    <CreateAccount />
+                </Grid>
             </Grid>
-            <Grid
-                item
-                xs={12}
-                md={6}
-                sx={{ px: { md: 4 } }}
-            >
-                <CreateAccount />
-            </Grid>
-        </Grid>
+        </Box>
     )
 }
