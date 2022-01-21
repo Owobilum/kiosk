@@ -49,9 +49,10 @@ export default function Home({ topDeals, bestsellers, products }) {
       <Grid
         container
         justifyContent={"space-between"}
-        style={{
+        sx={{
           maxHeight: 400
         }}
+        spacing={2}
       >
         <Grid
           item
@@ -65,7 +66,7 @@ export default function Home({ topDeals, bestsellers, products }) {
         <Grid
           item
           xs={12}
-          md={8}
+          md={9}
         >
           <ImageCarousel />
         </Grid>

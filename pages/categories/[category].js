@@ -103,6 +103,7 @@ export default function CategoryPage() {
             <Grid
                 container
                 justifyContent={"space-between"}
+                spacing={2}
             >
                 <Grid
                     item
@@ -111,7 +112,7 @@ export default function CategoryPage() {
                         display: { xs: 'none', md: 'block' }
                     }}
                 >
-                    <Box style={{ width: '100%', marginBottom: 32 }}>
+                    <Box style={{ width: '100%', marginBottom: 16 }}>
                         <CategoryList />
                     </Box>
                     <Box style={{ width: '100%' }}>
@@ -128,7 +129,7 @@ export default function CategoryPage() {
                 <Grid
                     item
                     xs={12}
-                    md={8}
+                    md={9}
                 >
                     <Paper
                         className={classes.paper}
