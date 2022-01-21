@@ -33,7 +33,7 @@ export const productReducer = (state = initialState, action) => {
             if (!state.savedItems) {
                 return {
                     ...state,
-                    savedItems: [...action.payload]
+                    savedItems: [action.payload]
                 }
             } else if ((state.savedItems.findIndex(item => item.productId === action.payload.productId)) === -1) {
                 return {
