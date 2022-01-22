@@ -36,12 +36,19 @@ export default function ProductPage() {
     const { product } = useSelector(state => state.products)
     const [isFavourite, setIsFavourite] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const savedItems = useSelector(state => state.auth?.user?.savedItems)
+    const { user } = useSelector(state => state.auth)
 
     const handleSaveItem = () => {
         let item = { img: product?.image, title: product?.title, price: product?.price, ratings: product?.rating.rate, productId: product?.id }
-        setIsFavourite(true)
-        setTimeout(() => setIsFavourite(false), 250)
-        dispatch(addSavedItem(item))
+        if (user) {
+            setIsFavourite(true)
+            setTimeout(() => setIsFavourite(false), 250)
+            dispatch(addSavedItem(item, savedItems, user.id))
+        } else {
+            router.push('/signin')
+        }
+
     }
 
     const handleAddToCart = () => {

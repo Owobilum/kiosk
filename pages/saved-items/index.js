@@ -74,10 +74,10 @@ function SavedItemsPage() {
         }))
     }
 
-    useEffect(() => {
-        setIsLoading(true)
-        id && dispatch(getUser(id, () => setIsLoading(false)))
-    }, [])
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     id && dispatch(getUser(id, () => setIsLoading(false)))
+    // }, [])
 
     return (
         <div className={classes.root}>
