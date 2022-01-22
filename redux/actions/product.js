@@ -1,3 +1,4 @@
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import swal from 'sweetalert2'
 
 import callApi from "../../utils/callApi"
@@ -7,6 +8,8 @@ import {
 } from "./actionTypes"
 import { MODAL_BTN_COLOR } from "../../utils/constants"
 import { notifyUser } from '../../utils/helpers'
+import { db } from '../../utils/firebase'
+import { getUser, setUser } from "./auth";
 
 
 export const getProductsInCategory = (url, cb) => async dispatch => {
@@ -58,15 +61,40 @@ export const saveProducts = products => ({
     payload: products
 })
 
-export const addSavedItem = item => dispatch => {
-    dispatch({
-        type: ADD_SAVED_ITEM,
-        payload: item
-    })
-    notifyUser(`${item.title} added to wishlist`)
+export const addSavedItem = (item, prevItems, userId) => async dispatch => {
+    let newItems
+    try {
+        if (!prevItems || prevItems.length === 0) {
+            newItems = [item]
+        } else
+            if ((prevItems.findIndex(prevItem => prevItem.productId === item.productId)) === (-1)) {
+                newItems = [...prevItems, item]
+            } else {
+                notifyUser(`${item.title} added to wishlist`)
+                return
+            }
+        const itemsRef = doc(db, "users", userId);
+        await updateDoc(itemsRef, {
+            savedItems: newItems
+        });
+        await dispatch(getUser(userId, () => null))
+        notifyUser(`${item.title} added to wishlist`)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
-export const removeSavedItem = id => ({
-    type: REMOVE_SAVED_ITEM,
-    payload: id
-})
+export const removeSavedItem = (savedItems, itemId, userId, cb) => async dispatch => {
+    let newItems
+    try {
+        newItems = savedItems.filter(item => item.productId !== itemId)
+        const itemsRef = doc(db, "users", userId);
+        await updateDoc(itemsRef, {
+            savedItems: newItems
+        });
+        cb(true)
+    } catch (error) {
+        console.error(error)
+        cb(false)
+    }
+}

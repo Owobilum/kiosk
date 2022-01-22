@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Rating, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { makeStyles } from '@mui/styles';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { formatMoney } from '../utils/helpers';
 import { addToCart } from '../redux/actions/cart';
@@ -29,15 +29,23 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
     const classes = useStyles()
     const dispatch = useDispatch()
     const [isFavourite, setIsFavourite] = React.useState(false)
+    // const { savedItems } = useSelector(state => state.auth?.user)
+    const savedItems = useSelector(state => state.auth?.user?.savedItems)
+    const { user } = useSelector(state => state.auth)
 
     const handleAddToCart = product => {
         dispatch(addToCart(product))
     }
 
     const handleSaveItem = product => {
-        setIsFavourite(true)
-        setTimeout(() => setIsFavourite(false), 250)
-        dispatch(addSavedItem(product))
+        if (user) {
+            setIsFavourite(true)
+            setTimeout(() => setIsFavourite(false), 250)
+            dispatch(addSavedItem(product, savedItems, user.id))
+        } else {
+            router.push('/signin')
+        }
+
     }
 
     return (
@@ -91,7 +99,7 @@ export default function ProductCard({ img, title, price, ratings, productId }) {
                 </Button>
                 <IconButton
                     size="small"
-                    onClick={() => handleSaveItem({ img, title, price, ratings, productId })}
+                    onClick={() => handleSaveItem({ img, title, price, ratings, productId }, savedItems)}
                 >
                     <FavoriteIcon color={isFavourite ? "primary" : ""} />
                 </IconButton>

@@ -9,8 +9,6 @@ import swal from 'sweetalert2'
 import { db, auth, googleProvider } from "../../utils/firebase"
 import { MODAL_BTN_COLOR } from '../../utils/constants';
 
-
-
 export const setAuthStatus = (isAuthenticated) => ({
     type: SET_AUTH_STATUS,
     payload: isAuthenticated
@@ -190,4 +188,17 @@ export const resetPassword = email => async dispatch => {
     } finally {
         dispatch(setAuthLoadingEnd())
     }
+}
+
+export const getUser = (id, cb) => async dispatch => {
+    try {
+        const docRef = doc(db, "users", id);
+        const docSnap = await getDoc(docRef);
+        dispatch(setUser({ ...docSnap.data(), id }))
+    } catch (error) {
+        console.error(error)
+    } finally {
+        cb()
+    }
+
 }

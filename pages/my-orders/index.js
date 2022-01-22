@@ -14,7 +14,7 @@ function OrdersPage() {
     const { orders, isLoading } = useSelector(state => state.order)
 
     useEffect(() => {
-        user.id && dispatch(getOrders(user.id))
+        user && dispatch(getOrders(user.id))
     }, [])
 
     if (isLoading) {

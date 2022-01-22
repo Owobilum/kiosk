@@ -56,6 +56,10 @@ export default function Header() {
 
     const handleViewSavedItems = () => {
         handleMenuClose()
+        if (!user) {
+            dispatch(setCurrentPath('/saved-items'))
+            return router.push('/signin')
+        }
         router.push('/saved-items')
     }
 
