@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from "next/router"
-import { Typography, Grid, Paper, Box, Stack, IconButton, Button } from '@mui/material'
+import { Typography, Grid, Paper, Box, Stack, IconButton, Button, CircularProgress } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from '@mui/styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import CategoryList from '../../components/CategoryList'
 import ProductCardAlternate from '../../components/ProductCardAlternate';
 import { removeSavedItem } from '../../redux/actions/product'
+import { getUser } from '../../redux/actions/auth';
+import withAuth from '../../utils/hocs/withAuth'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -52,20 +54,37 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function SavedItemsPage() {
+function SavedItemsPage() {
     const router = useRouter()
     const classes = useStyles()
     const dispatch = useDispatch()
-    const { savedItems } = useSelector(state => state.products)
+    const { user: { savedItems, id } } = useSelector(state => state.auth)
     const [isLoading, setIsLoading] = useState(false)
 
-    const handleRemoveItem = id => dispatch(removeSavedItem(id))
+    const handleRemoveItem = itemId => {
+        setIsLoading(true)
+        dispatch(removeSavedItem(savedItems, itemId, id, (successful) => {
+            if (successful) {
+                dispatch(getUser(id, () => {
+                    setIsLoading(false)
+                }))
+            } else {
+                setIsLoading(false)
+            }
+        }))
+    }
+
+    useEffect(() => {
+        setIsLoading(true)
+        id && dispatch(getUser(id, () => setIsLoading(false)))
+    }, [])
 
     return (
         <div className={classes.root}>
             <Grid
                 container
                 justifyContent={"space-between"}
+                spacing={2}
             >
                 <Grid
                     item
@@ -81,7 +100,7 @@ export default function SavedItemsPage() {
                 <Grid
                     item
                     xs={12}
-                    md={8}
+                    md={9}
                 >
                     <Paper
                         className={classes.paper}
@@ -105,7 +124,7 @@ export default function SavedItemsPage() {
                             </Box>
                         </Box>
                         {!isLoading &&
-                            <Stack spacing={3} style={{}}>
+                            <Stack spacing={3}>
                                 {savedItems && savedItems.map(product => (
                                     <React.Fragment key={product.title}>
                                         <ProductCardAlternate
@@ -131,17 +150,22 @@ export default function SavedItemsPage() {
                             </Stack>
                         }
                         {
-                            savedItems.length === 0 &&
-                            <Button variant="outlined" onClick={() => router.push('/')}>
-                                Continue Shopping
-                            </Button>
+                            (!savedItems || savedItems?.length === 0) && !isLoading &&
+                            <>
+                                <Typography variant="body2" component="p" sx={{ my: 2 }}>
+                                    {`You don\'t have any saved items`}
+                                </Typography>
+                                <Button variant="outlined" onClick={() => router.push('/')}>
+                                    Continue Shopping
+                                </Button>
+                            </>
                         }
-                        {/* {
+                        {
                             isLoading &&
                             <Box className={classes.loaderBox}>
                                 <CircularProgress color="primary" />
                             </Box>
-                        } */}
+                        }
 
                     </Paper>
                 </Grid>
@@ -149,3 +173,5 @@ export default function SavedItemsPage() {
         </div>
     )
 }
+
+export default withAuth(SavedItemsPage)
