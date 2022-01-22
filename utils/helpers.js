@@ -1,5 +1,8 @@
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import swal from 'sweetalert2'
+
+import { MODAL_BTN_COLOR } from './constants'
 
 toast.configure()
 
@@ -17,3 +20,13 @@ export const formatMoney = (money) => {
         currency: "NGN",
     }).format(money);
 };
+
+export const handleError = (error) => {
+    console.error(error)
+    swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error?.message,
+        confirmButtonColor: MODAL_BTN_COLOR,
+    })
+}

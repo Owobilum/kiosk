@@ -8,6 +8,7 @@ import swal from 'sweetalert2'
 
 import { db, auth, googleProvider } from "../../utils/firebase"
 import { MODAL_BTN_COLOR } from '../../utils/constants';
+import { handleError } from '../../utils/helpers';
 
 export const setAuthStatus = (isAuthenticated) => ({
     type: SET_AUTH_STATUS,
@@ -46,13 +47,7 @@ export const setAddress = (address, id, cb) => async dispatch => {
         dispatch(setUser({ ...userSnap.data(), id }))
         cb()
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     } finally {
         dispatch(setAuthLoadingEnd())
     }
@@ -90,13 +85,7 @@ export const storeUserToDb = (email, id, displayName, otherDetails) => async dis
             const userSnap = await getDoc(docRef)
             dispatch(setUser({ ...userSnap.data(), id }))
         } catch (error) {
-            console.error(error);
-            swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error?.message,
-                confirmButtonColor: MODAL_BTN_COLOR,
-            })
+            handleError(error)
         }
     }
 }
@@ -111,13 +100,7 @@ export const signInWithGoogle = (cb) => async dispatch => {
             cb()
         }
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     } finally {
         dispatch(setAuthLoadingEnd())
     }
@@ -132,13 +115,7 @@ export const signUpWithEmail = (email, password, otherDetails, cb) => async disp
             cb()
         }
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     } finally {
         dispatch(setAuthLoadingEnd())
     }
@@ -154,13 +131,7 @@ export const signInWithEmail = (email, password, cb) => async dispatch => {
             cb()
         }
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     }
     finally {
         dispatch(setAuthLoadingEnd())
@@ -178,13 +149,7 @@ export const resetPassword = email => async dispatch => {
             confirmButtonColor: MODAL_BTN_COLOR,
         })
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     } finally {
         dispatch(setAuthLoadingEnd())
     }
@@ -196,7 +161,7 @@ export const getUser = (id, cb) => async dispatch => {
         const docSnap = await getDoc(docRef);
         dispatch(setUser({ ...docSnap.data(), id }))
     } catch (error) {
-        console.error(error)
+        handleError(error)
     } finally {
         cb()
     }

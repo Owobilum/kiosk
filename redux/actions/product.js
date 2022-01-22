@@ -1,15 +1,13 @@
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import swal from 'sweetalert2'
+import { doc, updateDoc } from "firebase/firestore";
 
 import callApi from "../../utils/callApi"
 import {
     ADD_SAVED_ITEM, CLEAR_PRODUCTS_IN_CATEGORY, GET_PRODUCT,
     GET_PRODUCTS_IN_CATEGORY, REMOVE_SAVED_ITEM, SAVE_PRODUCTS
 } from "./actionTypes"
-import { MODAL_BTN_COLOR } from "../../utils/constants"
-import { notifyUser } from '../../utils/helpers'
+import { handleError, notifyUser } from '../../utils/helpers'
 import { db } from '../../utils/firebase'
-import { getUser, setUser } from "./auth";
+import { getUser } from "./auth";
 
 
 export const getProductsInCategory = (url, cb) => async dispatch => {
@@ -21,13 +19,7 @@ export const getProductsInCategory = (url, cb) => async dispatch => {
             payload: data
         })
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     } finally {
         cb()
     }
@@ -44,13 +36,7 @@ export const getProduct = (productId, cb) => async dispatch => {
             payload: data
         })
     } catch (error) {
-        console.error(error)
-        swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error?.message,
-            confirmButtonColor: MODAL_BTN_COLOR,
-        })
+        handleError(error)
     } finally {
         cb()
     }
@@ -80,7 +66,7 @@ export const addSavedItem = (item, prevItems, userId) => async dispatch => {
         await dispatch(getUser(userId, () => null))
         notifyUser(`${item.title} added to wishlist`)
     } catch (error) {
-        console.error(error)
+        handleError(error)
     }
 }
 
@@ -94,7 +80,7 @@ export const removeSavedItem = (savedItems, itemId, userId, cb) => async dispatc
         });
         cb(true)
     } catch (error) {
-        console.error(error)
         cb(false)
+        handleError(error)
     }
 }
