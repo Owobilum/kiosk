@@ -153,7 +153,7 @@ function SavedItemsPage() {
                             (!savedItems || savedItems?.length === 0) && !isLoading &&
                             <>
                                 <Typography variant="body2" component="p" sx={{ my: 2 }}>
-                                    {`You do&aposnot have any saved items`}
+                                    {`You don\'t have any saved items`}
                                 </Typography>
                                 <Button variant="outlined" onClick={() => router.push('/')}>
                                     Continue Shopping
