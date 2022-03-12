@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: "center",
         alignItems: "center",
+        transition: "transform 0.2s ease",
         '&:hover': {
             transform: 'scale(1.1)'
         },
@@ -48,6 +49,7 @@ const CategoryCard = ({ img, name, path }) => {
                     <Typography
                         variant="h6"
                         component="h6"
+                        sx={{ fontSize: { xs: 12, sm: 14, md: 16, lg: 20 }, textAlign: 'center' }}
                     >
                         {name}
                     </Typography>
