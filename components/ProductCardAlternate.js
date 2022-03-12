@@ -31,7 +31,7 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                             height: '100%',
                             width: '100%',
                             objectFit: 'cover',
-                            objectPosition: 'top left'
+                            objectPosition: 'top center'
                         }}
                     />
                 </Grid>
