@@ -26,6 +26,15 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    imgBox: {
+        height: 250
+    },
+    img: {
+        height: '100%',
+        width: '100%',
+        objectFit: 'cover',
+        objectPosition: 'top center'
     }
 }))
 export default function ProductPage() {
@@ -78,20 +87,21 @@ export default function ProductPage() {
                             >
                                 <Grid
                                     item
-                                    xs={5}
+                                    xs={12}
+                                    md={5}
                                 >
-                                    <Box>
+                                    <Box className={classes.imgBox}>
                                         <img
                                             src={product.image}
-                                            // height="200px"
                                             width="100%"
                                             alt={product.title}
+                                            className={classes.img}
                                         />
                                     </Box>
                                 </Grid>
                                 <Grid
                                     item
-                                    xs={5}
+                                    xs={12}
                                     md={6}
                                 >
                                     <Typography
@@ -103,7 +113,7 @@ export default function ProductPage() {
                                     </Typography>
                                     <Rating
                                         size="small"
-                                        value={product?.rating?.rate || ""}
+                                        value={product?.rating?.rate || 0}
                                         readOnly
                                         sx={{ mb: 4, mt: 1 }}
                                     />
