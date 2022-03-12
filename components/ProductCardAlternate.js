@@ -21,12 +21,18 @@ export default function ProductCardAlternate({ img, title, price, ratings, produ
                     item
                     xs={3}
                     onClick={() => router.push(`/products/${productId}`)}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: 'pointer', height: '150px' }}
                 >
                     <img
                         src={img}
                         width="100%"
                         alt={title}
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'top left'
+                        }}
                     />
                 </Grid>
                 <Grid
