@@ -41,7 +41,6 @@ export default function Home({ topDeals, bestsellers, products }) {
       style={{
         paddingRight: '5%',
         paddingLeft: '5%',
-        // border: 'solid red',
       }}
     >
 
@@ -50,7 +49,7 @@ export default function Home({ topDeals, bestsellers, products }) {
         container
         justifyContent={"space-between"}
         sx={{
-          maxHeight: 400
+          height: { xs: 300, md: 400 },
         }}
         spacing={2}
       >
@@ -59,6 +58,7 @@ export default function Home({ topDeals, bestsellers, products }) {
           md={3}
           sx={{
             display: { xs: 'none', md: 'flex' },
+            maxHeight: '100%'
           }}
         >
           <CategoryList />
@@ -67,6 +67,9 @@ export default function Home({ topDeals, bestsellers, products }) {
           item
           xs={12}
           md={9}
+          sx={{
+            maxHeight: '100%',
+          }}
         >
           <ImageCarousel />
         </Grid>
@@ -91,7 +94,6 @@ export default function Home({ topDeals, bestsellers, products }) {
         <Grid
           container
           spacing={1}
-        // alignItems="stretch"
         >
           {topDeals.map(deal => (
             <Grid
