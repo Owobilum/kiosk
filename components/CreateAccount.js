@@ -35,7 +35,7 @@ const CreateAccount = () => {
                     sx={{ width: '100%', color: '#fff', mt: 3 }}
                     onClick={() => router.push('/signup')}
                 >
-                    Create an Account Via Email
+                    Create an Account
                 </Button>
                 <Button
                     variant="outlined"
