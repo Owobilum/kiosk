@@ -1,8 +1,10 @@
-import { ORDER_LOADING_END, ORDER_LOADING_START, SAVE_ORDER, GET_ORDERS } from "../actions/actionTypes"
+import { ORDER_LOADING_END, ORDER_LOADING_START, SAVE_ORDER, GET_ORDERS, SET_ORDER_DETAILS, SET_ORDER } from "../actions/actionTypes"
 
 const InitialState = {
     orders: [],
-    isLoading: false
+    isLoading: false,
+    order:{},
+    orderDetails:{}
 }
 
 const orderReducer = (state = InitialState, action) => {
@@ -26,6 +28,16 @@ const orderReducer = (state = InitialState, action) => {
             return {
                 ...state,
                 isLoading: false
+            }
+        case SET_ORDER:
+            return{
+                ...state,
+                order:action.payload
+            }
+        case SET_ORDER_DETAILS:
+            return{
+                ...state,
+                orderDetails:action.payload
             }
         default:
             return state

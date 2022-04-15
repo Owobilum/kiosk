@@ -12,8 +12,9 @@ import { formatMoney } from '../../utils/helpers'
 import CheckoutItem from '../../components/CheckoutItem'
 import { emptyCart } from '../../redux/actions/cart'
 import { setAddress, setCurrentPath } from '../../redux/actions/auth'
-import { getOrders, saveOrder } from '../../redux/actions/order'
+import { saveOrder } from '../../redux/actions/order'
 import withAuth from '../../utils/hocs/withAuth'
+import { MODAL_BTN_COLOR } from '../../utils/constants'
 
 function CheckoutPage() {
     const router = useRouter()
@@ -49,7 +50,7 @@ function CheckoutPage() {
             swal.fire({
                 icon: 'info',
                 title: 'Please add a shipping address',
-                confirmButtonColor: '#D48166'
+                confirmButtonColor: MODAL_BTN_COLOR
             })
         }
     }
@@ -66,12 +67,10 @@ function CheckoutPage() {
                 if (result.isConfirmed) {
                     dispatch(emptyCart())
                     dispatch(setCurrentPath(null))
-                    router.push('/')
+                    router.push('/invoice')
                 }
             })
         }))
-
-        // dispatch(getOrders(user.id))
     }
 
     let randomEmail = `${Math.floor(Math.random() * 11223344)}@kioskng.com`
@@ -87,7 +86,6 @@ function CheckoutPage() {
 
     const onSuccess = (reference) => {
         // Implementation for whatever you want to do with reference and after success call.
-        // console.log(reference);
         handleSaveOrder(reference)
     };
 
@@ -200,8 +198,6 @@ function CheckoutPage() {
                 <DialogTitle>Address</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {/* To subscribe to this website, please enter your email address here. We
-                        will send updates occasionally. */}
                         Please input the address you would like your order delivered to. Kindly include your
                         house number, street and L.G.A
                     </DialogContentText>

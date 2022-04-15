@@ -1,9 +1,11 @@
-import { getDocs, collection, addDoc } from "firebase/firestore";
+import { getDocs, collection, addDoc,doc,getDoc } from "firebase/firestore";
 import swal from 'sweetalert2'
 
 import { db } from "../../utils/firebase"
-import { GET_ORDERS, ORDER_LOADING_END, ORDER_LOADING_START } from "./actionTypes";
+import { GET_ORDERS, ORDER_LOADING_END, ORDER_LOADING_START, SET_ORDER, SET_ORDER_DETAILS } from "./actionTypes";
 import { MODAL_BTN_COLOR } from "../../utils/constants";
+import { handleError } from '../../utils/helpers';
+
 
 export const orderLoadingStart = () => ({
     type: ORDER_LOADING_START
@@ -22,7 +24,14 @@ export const saveOrder = (id, items, reference, cb) => async dispatch => {
         paymentReference: reference
     }
     try {
-        await addDoc(collection(db, `users/${id}/orders`), data)
+         const res = await addDoc(collection(db, `users/${id}/orders`), data)
+        dispatch({
+            type: SET_ORDER,
+            payload:{
+                id: res.id,
+                path: res.path
+            }
+        })
         cb()
     } catch (error) {
         console.error(error)
@@ -62,4 +71,20 @@ export const getOrders = (id) => async dispatch => {
     } finally {
         dispatch(orderLoadingEnd())
     }
+}
+
+export const getOrder = (path,id,cb) => async dispatch => {
+    try {
+        const docRef = doc(db, path);
+        const docSnap = await getDoc(docRef);
+        dispatch({
+            type:SET_ORDER_DETAILS,
+            payload: { ...docSnap.data(), id }
+        })
+    } catch (error) {
+        handleError(error)
+    } finally {
+        cb()
+    }
+
 }
