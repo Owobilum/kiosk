@@ -8,7 +8,6 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const useStyles = makeStyles(theme => ({
     root: {
-
         color: "#fff",
         backgroundColor: theme.palette.primary.dark,
         marginTop: 48,
@@ -42,7 +41,14 @@ const useStyles = makeStyles(theme => ({
 export default function Footer() {
     const classes = useStyles()
     return (
-        <div className={classes.root}>
+        <Box 
+            className={classes.root}
+            sx={{
+                "@media print": {
+                    display: 'none'
+                }
+            }}
+        >
             <Grid
                 container
                 justifyContent="space-between"
@@ -143,6 +149,6 @@ export default function Footer() {
                 </Typography>
             </Box>
 
-        </div>
+        </Box>
     )
 }

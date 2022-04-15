@@ -15,7 +15,7 @@ function OrdersPage() {
 
     useEffect(() => {
         user && dispatch(getOrders(user.id))
-    }, [])
+    }, [dispatch,user])
 
     if (isLoading) {
         return (

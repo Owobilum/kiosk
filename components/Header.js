@@ -113,7 +113,10 @@ export default function Header() {
     return (
         <Box
             sx={{
-                mb: { xs: 20, md: 16 } //bottom margin for header
+                mb: { xs: 20, md: 16 },//bottom margin for header
+                "@media print": {
+                    display: 'none'
+                }
             }}
         >
             <AppBar
