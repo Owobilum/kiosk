@@ -1,14 +1,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import theme from '../styles/theme';
 import createEmotionCache from '../src/lib/createEmotionCache';
 import { wrapper, store, persistor } from '../redux/store';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
 import Layout from '../components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
