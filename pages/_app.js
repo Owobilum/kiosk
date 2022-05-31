@@ -7,7 +7,7 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../styles/theme';
 import createEmotionCache from '../src/lib/createEmotionCache';
 import { wrapper, store, persistor } from '../redux/store';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import Layout from '../components/Layout';
 
@@ -39,7 +39,7 @@ function MyApp(props) {
   );
 }
 
-export default wrapper.withRedux(MyApp)
+export default wrapper.withRedux(MyApp);
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
